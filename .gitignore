@@ -1,0 +1,9 @@
+# Visual Studio
+.vs/
+
+# Visual Studio Code
+.vscode/
+
+# Build results
+bin/
+obj/
