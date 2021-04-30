@@ -78,7 +78,8 @@ namespace BookKeeperBot.Services
                 {
                     Regex commandPattern = new Regex(@"^/\w+", RegexOptions.IgnoreCase);
                     var command = commandPattern.Match(message.Text).Value;
-                    if (command != null)
+                    
+                    if (!string.IsNullOrEmpty(command))
                     {
                         context.CommandName = command.ToLower();
                         context.Parameters = message.Text.Replace(command, "").Trim();
