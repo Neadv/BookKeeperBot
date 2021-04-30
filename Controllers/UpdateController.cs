@@ -19,7 +19,9 @@ namespace BookKeeperBot.Controllers
         [HttpPost]
         public async Task<ActionResult> Update(Update update)
         {
-            await selector.SelectAsync(update);
+            await selector
+                .ConfigureCommands()
+                .SelectAsync(update);
             return Ok();
         } 
     }
