@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BookKeeperBot.Models.Commands;
 
 namespace BookKeeperBot.Models
 {
@@ -8,6 +9,7 @@ namespace BookKeeperBot.Models
         public string Username { get; set; }
         public List<Bookshelf> Bookshelves { get; set; }
 
+        public CommandState State { get; set; }
         public string PreviousCommand { get; set; }
 
         public int? SelectedBookshelfId { get; set; }
