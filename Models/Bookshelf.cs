@@ -8,6 +8,9 @@ namespace BookKeeperBot.Models
         public string Name { get; set; }
         public List<Book> Books { get; set; }
 
+        public User User { get; set; }
+        public int UserId { get; set; }
+
         public IEnumerable<Book> GetInProgress()
             => GetBooks(BookState.InProgress);
         
