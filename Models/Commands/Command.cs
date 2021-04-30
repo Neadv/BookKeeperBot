@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Telegram.Bot;
 
 namespace BookKeeperBot.Models.Commands
@@ -5,10 +6,22 @@ namespace BookKeeperBot.Models.Commands
     public abstract class Command
     {
         public string Name { get; set; } 
-        public CommandState State { get; set; } = CommandState.NoContext;
+        public CommandState State { get; set; }
         public ITelegramBotClient BotClient { get; set; }
 
-        public abstract void Execute(CommandContext context);
+        public Command(string name, CommandState state)
+        {
+            Name = name;
+            State = state;
+        }
+
+        public Command()
+        {
+            Name = string.Empty;
+            State = CommandState.NoContext;
+        }
+
+        public abstract Task ExecuteAsync(CommandContext context);
 
         public virtual bool Check(CommandString command)
         {
@@ -18,8 +31,8 @@ namespace BookKeeperBot.Models.Commands
 
     public enum CommandState
     {
+        NoContext,
         Bookshelf,
-        Book,
-        NoContext
+        Book
     }
 }

@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using BookKeeperBot.Services;
 using Microsoft.AspNetCore.Mvc;
-using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace BookKeeperBot.Controllers
@@ -10,17 +9,17 @@ namespace BookKeeperBot.Controllers
     [Route("api/update")]
     public class UpdateController : ControllerBase
     {
-        private readonly ITelegramBotClient botClient;
+        private readonly ICommandSelector selector;
 
-        public UpdateController(IBotService botService)
+        public UpdateController(ICommandSelector commandSelector)
         {
-            botClient = botService.Client;
+            selector = commandSelector;
         }
 
         [HttpPost]
         public async Task<ActionResult> Update(Update update)
         {
-            await botClient.SendTextMessageAsync(update.Message.Chat, update.Message.Text);
+            await selector.SelectAsync(update);
             return Ok();
         } 
     }

@@ -36,6 +36,8 @@ namespace BookKeeperBot
             });
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped<ICommandSelector, CommandSelector>();
+            services.AddScoped<IContextFactory, ContextFactory>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBotService bot)

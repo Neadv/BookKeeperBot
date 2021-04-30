@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Telegram.Bot.Types;
 
 namespace BookKeeperBot.Models.Commands
 {
@@ -14,6 +15,10 @@ namespace BookKeeperBot.Models.Commands
         public List<Bookshelf> Bookshelves { get; set; }
         public Bookshelf SelectedBookshelf { get; set; }
         public Book SelectedBook { get; set; }
+        public Message Message { get; set; }
+
+        public void ChangeState(CommandState state)
+            => User.State = state;
 
         public CommandString GetCommandString()
         {
