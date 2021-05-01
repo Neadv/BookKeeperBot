@@ -39,14 +39,14 @@ namespace BookKeeperBot.Services
                 context.State = state;
                 context.PreviousCommand = user.PreviousCommand;
 
-                if (state == CommandState.Bookshelf)
+                if (state == CommandState.MainMenu)
                 {
                     await userRepo.LoadProperty(user, user => user.SelectedBookshelf);
                     context.SelectedBookshelf = user.SelectedBookshelf;
 
                     context.Bookshelves = (await bookshelfRepo.GetAllAsync(bs => bs.UserId == user.Id)).ToList();
                 }
-                else if (state == CommandState.Book)
+                else if (state == CommandState.BookMenu)
                 {
                     await userRepo.LoadProperty(user, user => user.SelectedBook);
                     context.SelectedBook = user.SelectedBook;

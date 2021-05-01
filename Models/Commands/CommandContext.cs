@@ -18,7 +18,32 @@ namespace BookKeeperBot.Models.Commands
         public Message Message { get; set; }
 
         public void ChangeState(CommandState state)
-            => User.State = state;
+        {
+            if (User != null)
+                User.State = state;
+        }
+
+        public void AddBookshelf(Bookshelf bookshelf)
+        {
+            if (User != null)
+            {
+                if (User.Bookshelves == null)
+                    User.Bookshelves = new List<Bookshelf>();
+                
+                User.Bookshelves.Add(bookshelf);
+            }
+        }
+
+        public void AddBook(Book book)
+        {
+            if (SelectedBookshelf != null)
+            {
+                if (SelectedBookshelf.Books == null)
+                    SelectedBookshelf.Books = new List<Book>();
+                
+                SelectedBookshelf.Books.Add(book);
+            }
+        }
 
         public CommandString GetCommandString()
         {
@@ -27,7 +52,8 @@ namespace BookKeeperBot.Models.Commands
                 CommandName = CommandName,
                 ContainData = !string.IsNullOrEmpty(Data),
                 PreviosCommand = PreviousCommand,
-                State = State
+                State = State,
+                IsAuthorized = User != null
             };
         }
     }

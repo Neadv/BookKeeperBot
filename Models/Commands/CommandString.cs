@@ -6,5 +6,6 @@ namespace BookKeeperBot.Models.Commands
         public bool ContainData { get; set; }
         public string PreviosCommand { get; set; }
         public CommandState State { get; set; }
+        public bool IsAuthorized { get; set; }
     }
 }
