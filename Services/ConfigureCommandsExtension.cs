@@ -6,12 +6,22 @@ namespace BookKeeperBot.Services
     {
         public static ICommandSelector ConfigureCommands(this ICommandSelector commandSelector, params Command[] commands)
         {
-            // Add new commands
-            commandSelector.AddCommand(new StartCommand());   
-            commandSelector.AddCommand(new BackToMenuCommand());
+            // Initialization commands
             commandSelector.AddCommand(new InitialCommand());         
-            commandSelector.AddCommand(new AboutCommand());
+            commandSelector.AddCommand(new StartCommand());   
 
+            // No-Context commands
+            commandSelector.AddCommand(new BackToMenuCommand());
+            commandSelector.AddCommand(new AboutCommand());
+            
+            // Main menu commands
+            commandSelector.AddCommand(new AddBookshelfCommand());
+            commandSelector.AddCommand(new RemoveBookshelfCommand());
+            commandSelector.AddCommand(new ListBookshelfCommand());
+            commandSelector.AddCommand(new SelectBookshelfCommand());
+            commandSelector.AddCommand(new EditBookshelfCommand());
+
+            // Parameters commands
             foreach (var command in commands)
             {
                 commandSelector.AddCommand(command);
