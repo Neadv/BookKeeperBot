@@ -46,7 +46,7 @@ namespace BookKeeperBot.Services
         {
             if (context.User != null)
             {
-                context.User.PreviousCommand = command.Name;
+                context.User.PreviousCommand = context.CommandName;
                 
                 if (user == null)
                 {

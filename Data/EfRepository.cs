@@ -40,7 +40,7 @@ namespace BookKeeperBot.Data
                 query = query.Where(filter);
             }
 
-            return await query.AsNoTracking().ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)

@@ -41,13 +41,14 @@ namespace BookKeeperBot.Services
 
                 if (state == CommandState.MainMenu)
                 {
-                    await userRepo.LoadProperty(user, user => user.SelectedBookshelf);
-                    context.SelectedBookshelf = user.SelectedBookshelf;
-
                     context.Bookshelves = (await bookshelfRepo.GetAllAsync(bs => bs.UserId == user.Id)).ToList();
+                    context.SelectedBookshelf = user.SelectedBookshelf;
                 }
                 else if (state == CommandState.BookMenu)
                 {
+                    await userRepo.LoadProperty(user, user => user.SelectedBookshelf);
+                    context.SelectedBookshelf = user.SelectedBookshelf;
+
                     await userRepo.LoadProperty(user, user => user.SelectedBook);
                     context.SelectedBook = user.SelectedBook;
 
@@ -78,7 +79,7 @@ namespace BookKeeperBot.Services
                 {
                     Regex commandPattern = new Regex(@"^/\w+", RegexOptions.IgnoreCase);
                     var command = commandPattern.Match(message.Text).Value;
-                    
+
                     if (!string.IsNullOrEmpty(command))
                     {
                         context.CommandName = command.ToLower();
