@@ -13,9 +13,30 @@ namespace BookKeeperBot.Models.Commands
         public CommandState State { get; set; }
         public string PreviousCommand { get; set; }
         public List<Bookshelf> Bookshelves { get; set; }
-        public Bookshelf SelectedBookshelf { get; set; }
-        public Book SelectedBook { get; set; }
         public Message Message { get; set; }
+        public Bookshelf SelectedBookshelf
+        {
+            get => selectedBookshelf;
+            set
+            {
+                if (User != null)
+                    User.SelectedBookshelf = value;
+                selectedBookshelf = value;
+            }
+        }
+        public Book SelectedBook
+        {
+            get => selectedBook;
+            set
+            {
+                if (User != null)
+                    User.SelectedBook = value;
+                selectedBook = value;
+            }
+        }
+
+        private Bookshelf selectedBookshelf;
+        private Book selectedBook;
 
         public void ChangeState(CommandState state)
         {
@@ -29,8 +50,16 @@ namespace BookKeeperBot.Models.Commands
             {
                 if (User.Bookshelves == null)
                     User.Bookshelves = new List<Bookshelf>();
-                
+
                 User.Bookshelves.Add(bookshelf);
+            }
+        }
+
+        public void RemoveBookshelf(Bookshelf bookshelf)
+        {
+            if (User != null && User.Bookshelves != null)
+            {
+                User.Bookshelves.Remove(bookshelf);
             }
         }
 
@@ -40,8 +69,16 @@ namespace BookKeeperBot.Models.Commands
             {
                 if (SelectedBookshelf.Books == null)
                     SelectedBookshelf.Books = new List<Book>();
-                
+
                 SelectedBookshelf.Books.Add(book);
+            }
+        }
+
+        public void RemoveBook(Book book)
+        {
+            if (SelectedBookshelf != null && SelectedBookshelf.Books != null)
+            {
+                SelectedBookshelf.Books.Remove(book);
             }
         }
 
