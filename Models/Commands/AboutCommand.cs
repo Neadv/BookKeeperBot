@@ -11,6 +11,7 @@ namespace BookKeeperBot.Models.Commands
         public AboutCommand()
         {
             Name = "/about";
+            Alias = new string[] { "/help", "/commands" };
             State = CommandState.NoContext;
         }
 
