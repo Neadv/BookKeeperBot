@@ -21,6 +21,11 @@ namespace BookKeeperBot.Services
             commandSelector.AddCommand(new SelectBookshelfCommand());
             commandSelector.AddCommand(new EditBookshelfCommand());
 
+            // Book menu commands
+            commandSelector.AddCommand(new ListBookCommand());
+            commandSelector.AddCommand(new SelectBookCommand());
+            commandSelector.AddCommand(new RemoveBookCommand());
+
             // Parameters commands
             foreach (var command in commands)
             {
