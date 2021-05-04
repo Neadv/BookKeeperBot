@@ -15,10 +15,23 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            context.SelectedBook = null;
-            context.SelectedBookshelf = null;
-            context.ChangeState(CommandState.MainMenu);
-            await BotClient.SendTextMessageAsync(context.Message.Chat, "Main menu");
+            CommandState newState = CommandState.MainMenu;
+            string message = "Main menu";
+
+            if (context.State == CommandState.EditBookMenu)
+            {
+                context.SelectedBook = null;
+                newState = CommandState.BookMenu;
+                message = "Book menu";
+            }
+            else
+            {
+                context.SelectedBook = null;
+                context.SelectedBookshelf = null;
+            }
+
+            context.ChangeState(newState);
+            await BotClient.SendTextMessageAsync(context.Message.Chat, message);
         }
     }
 }

@@ -35,7 +35,6 @@ namespace BookKeeperBot.Models.Commands
             {
                 context.SelectedBook = book;
                 message = selectedMessage;
-                context.ChangeState(CommandState.BookMenu);
             }
             else
             {

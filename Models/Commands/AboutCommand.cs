@@ -7,6 +7,7 @@ namespace BookKeeperBot.Models.Commands
     {
         private string mainMenuMessage = "<em>Main menu command list:</em>";
         private string bookMenuMessage = "<em>Book menu command list:</em>";
+        private string editBookMenuMessage = "<em>Edit book menu command list:</em>";
 
         public AboutCommand()
         {
@@ -21,6 +22,7 @@ namespace BookKeeperBot.Models.Commands
             {
                 CommandState.MainMenu => mainMenuMessage,
                 CommandState.BookMenu => bookMenuMessage,
+                CommandState.EditBookMenu => editBookMenuMessage,
                 _ => null
             };
 

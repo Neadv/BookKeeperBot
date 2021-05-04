@@ -51,6 +51,14 @@ namespace BookKeeperBot.Services
 
                     context.SelectedBookshelf = await bookshelfRepo.GetWithIncludeAsync(b => b.Id == user.SelectedBookshelfId, b => b.Books);
                 }
+                else if (state == CommandState.EditBookMenu)
+                {
+                    await userRepo.LoadProperty(user, user => user.SelectedBook);
+                    context.SelectedBook = user.SelectedBook;
+
+                    await userRepo.LoadProperty(user, user => user.SelectedBookshelf);
+                    context.SelectedBookshelf = user.SelectedBookshelf;
+                }
             }
         }
 
