@@ -25,6 +25,8 @@ namespace BookKeeperBot.Services
             commandSelector.AddCommand(new ListBookCommand());
             commandSelector.AddCommand(new SelectBookCommand());
             commandSelector.AddCommand(new RemoveBookCommand());
+            commandSelector.AddCommand(new EditBookCommand());
+            commandSelector.AddCommand(new AddBookCommand());
 
             // Parameters commands
             foreach (var command in commands)
