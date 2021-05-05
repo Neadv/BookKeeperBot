@@ -7,15 +7,11 @@ namespace BookKeeperBot.Models.Commands
         private string selectedMessage = "Select bookshelf";
         private string errorMessage = "Error. There is no bookshelf with this name or id.";
 
-        public SelectBookshelfCommand()
-        {
-            Name = "/select";
-            State = CommandState.MainMenu;
-        }
+        public SelectBookshelfCommand() : base("/select") { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            Bookshelf bookshelf = FindBookshelf(context);
+            Bookshelf bookshelf = FindItem(context);
 
             string message = errorMessage;
             if (bookshelf != null)

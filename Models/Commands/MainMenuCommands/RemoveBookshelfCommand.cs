@@ -4,11 +4,8 @@ namespace BookKeeperBot.Models.Commands
 {
     public class RemoveBookshelfCommand : InputBookshelfCommand
     {
-        public RemoveBookshelfCommand()
+        public RemoveBookshelfCommand() : base ("/remove")
         {
-            Name = "/remove";
-            State = CommandState.MainMenu;
-
             EnterMessage = "Enter the name of the bookshelf";
             ExistMessage = "The bookshelf has removed";
             NoExitstMessage = "There is no bookshelf with that name.\nEnter the name of an existing bookshelf";
@@ -18,7 +15,7 @@ namespace BookKeeperBot.Models.Commands
         public async override Task ExecuteAsync(CommandContext context)
         {
             var bookshelf = context.SelectedBookshelf;
-            if (bookshelf != null || InputBookshelf(context, out bookshelf))
+            if (bookshelf != null || InputData(context, out bookshelf))
             {
                 if (bookshelf != null)
                 {

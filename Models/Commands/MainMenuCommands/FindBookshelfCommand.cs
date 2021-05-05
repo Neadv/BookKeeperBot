@@ -1,38 +1,14 @@
 namespace BookKeeperBot.Models.Commands
 {
-    public abstract class FindBookshelfCommand : Command
+    public abstract class FindBookshelfCommand : FindCommand<Bookshelf>
     {
+        public FindBookshelfCommand(string name) 
+            : base(name, CommandState.MainMenu) { } 
 
-        protected Bookshelf FindBookshelf(CommandContext context)
-        {
-            Bookshelf bookshelf = null;
-            if (!string.IsNullOrEmpty(context.Parameters))
-            {
-                bookshelf = context.Bookshelves.Find(b => b.Name.ToLower() == context.Parameters.ToLower());
-            }
-            else
-            {
-                string value = context.CommandName.Replace(Name, "");
-                if (int.TryParse(value, out int id))
-                {
-                    bookshelf = context.Bookshelves.Find(b => b.Id == id);
-                }
-            }
-            return bookshelf;
-        }
+        protected override Bookshelf GetById(CommandContext context, int id)
+            => context.Bookshelves.Find(b => b.Id == id);
 
-        public override bool Check(CommandString command)
-        {
-            if (base.Check(command))
-                return true;
-
-            if (!command.IsAuthorized)
-                return false;
-
-            if (command.State != State)
-                return false;
-
-            return command.CommandName != null && command.CommandName.StartsWith(Name);
-        }
+        protected override Bookshelf GetByName(CommandContext context, string input)
+            => context.Bookshelves.Find(b => b.Name.ToLower() == input.ToLower());
     }
 }

@@ -4,11 +4,8 @@ namespace BookKeeperBot.Models.Commands
 {
     public class AddBookshelfCommand : InputBookshelfCommand
     {
-        public AddBookshelfCommand()
+        public AddBookshelfCommand() : base("/add")
         {
-            Name = "/add";
-            State = CommandState.MainMenu;
-
             EnterMessage = "Enter a name for the new bookshelf";
             NoExitstMessage = "The bookshelf has added";
             ExistMessage = "There is bookshelf with that name.\nEnter a unique name";
@@ -16,7 +13,7 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            if (InputBookshelf(context, out Bookshelf bookshelf))
+            if (InputData(context, out Bookshelf bookshelf))
             {
                 if (bookshelf == null)
                 {

@@ -2,20 +2,16 @@ using System.Threading.Tasks;
 
 namespace BookKeeperBot.Models.Commands
 {
-    public class EditBookCommand : FindBookCommands
+    public class EditBookCommand : FindBookCommand
     {
         private string selectedMessage = "Edit book\n/description\n/title\n/image\n/note\n/category";
         private string errorMessage = "Error. There is no book with this name or id.";
 
-        public EditBookCommand()
-        {
-            Name = "/edit";
-            State = CommandState.BookMenu;
-        }
+        public EditBookCommand() : base("/edit") { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            Book book = FindBook(context);
+            Book book = FindItem(context);
 
             string message;
             if (book != null)

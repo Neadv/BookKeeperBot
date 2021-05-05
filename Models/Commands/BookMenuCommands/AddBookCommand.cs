@@ -4,11 +4,8 @@ namespace BookKeeperBot.Models.Commands
 {
     public class AddBookCommand : InputBookCommand
     {
-        public AddBookCommand()
+        public AddBookCommand() : base("/add")
         {
-            Name = "/add";
-            State = CommandState.BookMenu;
-
             EnterMessage = "Enter a title for the new book";
             NoExitstMessage = "The book has added";
             ExistMessage = "There is book with that name.\nEnter a unique name";
@@ -16,7 +13,7 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            if (InputBook(context, out Book book))
+            if (InputData(context, out Book book))
             {
                 if (book == null)
                 {

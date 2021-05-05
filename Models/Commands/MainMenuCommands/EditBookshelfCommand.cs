@@ -10,18 +10,14 @@ namespace BookKeeperBot.Models.Commands
         private string errorMessage = "Error. There is no bookshelf with this name or id.";
         private string errorNameMessage = "Error. There is bookshelf with this name.";
 
-        public EditBookshelfCommand()
-        {
-            Name = "/edit";
-            State = CommandState.MainMenu;
-        }
+        public EditBookshelfCommand() : base("/edit") { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
             string message = enterMessage;
             if (context.SelectedBookshelf == null || CheckParameters(context))
             {
-                context.SelectedBookshelf = FindBookshelf(context);
+                context.SelectedBookshelf = FindItem(context);
                 if (context.SelectedBookshelf == null)
                 {
                     message = errorMessage;
@@ -42,7 +38,7 @@ namespace BookKeeperBot.Models.Commands
             await BotClient.SendTextMessageAsync(context.Message.Chat, message);
         }
 
-        private bool CheckParameters(CommandContext context) 
+        private bool CheckParameters(CommandContext context)
             => context.CommandName != null && (string.IsNullOrEmpty(context.Parameters) || context.CommandName.Length > Name.Length);
 
         public override bool Check(CommandString command)
