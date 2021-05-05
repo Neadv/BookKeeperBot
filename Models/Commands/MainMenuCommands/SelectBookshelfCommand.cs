@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace BookKeeperBot.Models.Commands
 {
-    public class SelectBookshelfCommand : Command
+    public class SelectBookshelfCommand : FindBookshelfCommand
     {
         private string selectedMessage = "Select bookshelf";
         private string errorMessage = "Error. There is no bookshelf with this name or id.";
@@ -15,47 +15,17 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            Bookshelf bookshelf = null;
+            Bookshelf bookshelf = FindBookshelf(context);
 
-            if (!string.IsNullOrEmpty(context.Parameters))
-            {
-                bookshelf = context.Bookshelves.Find(b => b.Name.ToLower() == context.Parameters.ToLower());
-            }
-            else
-            {
-                string value = context.CommandName.Replace(Name, "");
-                if (int.TryParse(value, out int id))
-                {
-                    bookshelf = context.Bookshelves.Find(b => b.Id == id);
-                }
-            }
-
-            string message;
+            string message = errorMessage;
             if (bookshelf != null)
             {
-                context.SelectedBookshelf = bookshelf;
                 message = selectedMessage;
+                context.SelectedBookshelf = bookshelf;
                 context.ChangeState(CommandState.BookMenu);
             }
-            else
-            {
-                message = errorMessage;
-            }
+
             await BotClient.SendTextMessageAsync(context.Message.Chat, message);
-        }
-
-        public override bool Check(CommandString command)
-        {
-            if (base.Check(command))
-                return true;
-
-            if (!command.IsAuthorized)
-                return false;
-
-            if (command.State != State)
-                return false;
-
-            return command.CommandName != null && command.CommandName.StartsWith(Name);
         }
     }
 }
