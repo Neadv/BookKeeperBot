@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace BookKeeperBot.Models.Commands
         public async override Task ExecuteAsync(CommandContext context)
         {
             IEnumerable<Book> books = context.SelectedBookshelf.Books;
-            
+
             if (context.CommandName == inProgress)
                 books = context.SelectedBookshelf.GetInProgress();
             else if (context.CommandName == completed)
@@ -28,7 +29,7 @@ namespace BookKeeperBot.Models.Commands
             else if (context.CommandName == planned)
                 books = context.SelectedBookshelf.GetPlanned();
 
-            var stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder("Books:\n");
             foreach (var book in books)
             {
                 stringBuilder.AppendLine($"{book.Title} - /edit{book.Id}, /select{book.Id}, /remove{book.Id}");

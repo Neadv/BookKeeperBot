@@ -13,7 +13,7 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            var stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder("Bookshelves:\n");
             foreach (var bookshelf in context.Bookshelves)
             {
                 stringBuilder.AppendLine($"{bookshelf.Name} - /select{bookshelf.Id}, /edit{bookshelf.Id}");
