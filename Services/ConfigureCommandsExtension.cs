@@ -28,6 +28,12 @@ namespace BookKeeperBot.Services
             commandSelector.AddCommand(new EditBookCommand());
             commandSelector.AddCommand(new AddBookCommand());
 
+            //Book edit menu commands
+            commandSelector.AddCommand(new EditDescriptionCommand());
+            commandSelector.AddCommand(new EditTitleCommand());
+            commandSelector.AddCommand(new EditNoteCommand());
+            commandSelector.AddCommand(new EditStateCommand());
+
             // Parameters commands
             foreach (var command in commands)
             {
