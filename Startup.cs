@@ -29,7 +29,9 @@ namespace BookKeeperBot
             services.AddControllers().AddNewtonsoftJson();
 
             services.Configure<BotConfiguration>(Configuration.GetSection("BotConfiguration"));
-            services.AddScoped<IBotService, BotService>();
+
+            services.AddSingleton<IBotService, BotService>();
+            services.AddSingleton<ICommandStorage, CommandStorage>();
 
             services.AddDbContext<DataContext>(opts => {
                opts.UseSqlite("Filename=Books.db");

@@ -7,6 +7,5 @@ namespace BookKeeperBot.Services
     public interface ICommandSelector
     {
         Task SelectAsync(CommandContext context);
-        void AddCommand(Command command);
     }
 }

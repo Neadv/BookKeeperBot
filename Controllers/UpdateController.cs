@@ -22,7 +22,7 @@ namespace BookKeeperBot.Controllers
         public async Task<ActionResult> Update(Update update)
         {
             var context = await factory.CreateContextAsync(update);
-            await selector.ConfigureCommands().SelectAsync(context);
+            await selector.SelectAsync(context);
             return Ok();
         } 
     }
