@@ -12,24 +12,20 @@ namespace BookKeeperBot.Services
     public class CommandSelector : ICommandSelector
     {
         private readonly IRepository<Models.User> userRepo;
-        private readonly IContextFactory factory;
         private readonly ITelegramBotClient botClient;
         
         private List<Command> commands = new List<Command>();
-        private CommandContext context = null;
         private Models.User user = null;
 
-        public CommandSelector(IRepository<Models.User> userRepository, IContextFactory contextFactory, IBotService botService)
+        public CommandSelector(IRepository<Models.User> userRepository, IBotService botService)
         {
             userRepo = userRepository;
-            factory = contextFactory;
             botClient = botService.Client;
         }
 
-        public async Task SelectAsync(Update update)
+        public async Task SelectAsync(CommandContext context)
         {
-            context = await factory.CreateContextAsync(update);
-            var command = FindCommand();
+            var command = FindCommand(context.GetCommandString());
             user = context.User;
 
             if (command != null)
@@ -69,12 +65,11 @@ namespace BookKeeperBot.Services
             commands.Add(command);
         }
 
-        private Command FindCommand()
+        private Command FindCommand(CommandString commandString)
         {
             Command command = null;
-            if (context != null)
+            if (commandString != null)
             {
-                var commandString = context.GetCommandString();
                 command = commands.FirstOrDefault(command => command.Check(commandString));
             }
             return command;

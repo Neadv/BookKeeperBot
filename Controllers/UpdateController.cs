@@ -10,18 +10,19 @@ namespace BookKeeperBot.Controllers
     public class UpdateController : ControllerBase
     {
         private readonly ICommandSelector selector;
+        private readonly IContextFactory factory;
 
-        public UpdateController(ICommandSelector commandSelector)
+        public UpdateController(ICommandSelector commandSelector, IContextFactory contextFactory)
         {
             selector = commandSelector;
+            factory = contextFactory;
         }
 
         [HttpPost]
         public async Task<ActionResult> Update(Update update)
         {
-            await selector
-                .ConfigureCommands()
-                .SelectAsync(update);
+            var context = await factory.CreateContextAsync(update);
+            await selector.ConfigureCommands().SelectAsync(context);
             return Ok();
         } 
     }
