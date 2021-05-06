@@ -70,6 +70,11 @@ namespace BookKeeperBot.Data
             await context.Entry<T>(entity).Reference(include).LoadAsync();
         }
 
+        public async Task LoadCollection(T entity, Expression<Func<T, IEnumerable<object>>> include)
+        {
+            await context.Entry<T>(entity).Collection(include).LoadAsync();
+        }
+
         public async Task UpdateAsync(T entity)
         {
             dbSet.Update(entity);

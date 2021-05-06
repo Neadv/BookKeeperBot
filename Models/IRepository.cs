@@ -17,5 +17,6 @@ namespace BookKeeperBot.Models
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task LoadProperty(T entity, Expression<Func<T, object>> include);
+        Task LoadCollection(T entity, Expression<Func<T, IEnumerable<object>>> include);
     }
 }
