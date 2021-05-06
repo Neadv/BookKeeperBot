@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BookKeeperBot.Models;
@@ -38,23 +37,20 @@ namespace BookKeeperBot.Services
 
                 if (state == CommandState.MainMenu)
                 {
-                    //context.Bookshelves = (await bookshelfRepo.GetAllAsync(bs => bs.UserId == user.Id)).ToList();
-                    await bookshelfRepo.GetAllAsync(bs => bs.UserId == user.Id);
-                    context.SelectedBookshelf = user.SelectedBookshelf;
+                    await userRepo.LoadCollection(user, user => user.Bookshelves);
                 }
                 else if (state == CommandState.BookMenu)
                 {
                     await userRepo.LoadProperty(user, user => user.SelectedBook);
+                    await userRepo.LoadProperty(user, user => user.SelectedBookshelf);
 
-                    context.SelectedBookshelf = await bookshelfRepo.GetWithIncludeAsync(b => b.Id == user.SelectedBookshelfId, b => b.Books);
+                    if (user.SelectedBookshelf != null)
+                        await bookshelfRepo.LoadCollection(user.SelectedBookshelf, b => b.Books);
                 }
                 else if (state == CommandState.EditBookMenu)
                 {
                     await userRepo.LoadProperty(user, user => user.SelectedBook);
-                    context.SelectedBook = user.SelectedBook;
-
                     await userRepo.LoadProperty(user, user => user.SelectedBookshelf);
-                    context.SelectedBookshelf = user.SelectedBookshelf;
                 }
             }
         }
@@ -63,32 +59,33 @@ namespace BookKeeperBot.Services
         {
             CommandContext context = new CommandContext();
 
+            Message message = update.Message;
+            string text = message?.Text;
+
             context.IsCallback = update.Type == UpdateType.CallbackQuery;
+
             if (context.IsCallback)
             {
-                context.Data = update.CallbackQuery.Data;
+                message = update.CallbackQuery.Message;
+                text = update.CallbackQuery.Data;
             }
-            else if (update.Type == UpdateType.Message)
+
+            if (text != null)
             {
-                var message = update.Message;
+                Regex commandPattern = new Regex(@"^/\w+", RegexOptions.IgnoreCase);
+                var command = commandPattern.Match(text).Value;
 
-                if (message.Text != null)
+                if (!string.IsNullOrEmpty(command))
                 {
-                    Regex commandPattern = new Regex(@"^/\w+", RegexOptions.IgnoreCase);
-                    var command = commandPattern.Match(message.Text).Value;
-
-                    if (!string.IsNullOrEmpty(command))
-                    {
-                        context.CommandName = command.ToLower();
-                        context.Parameters = message.Text.Replace(command, "").Trim();
-                    }
-                    else
-                    {
-                        context.Data = message.Text;
-                    }
+                    context.CommandName = command.ToLower();
+                    context.Parameters = text.Replace(command, "").Trim();
                 }
-                context.Message = message;
+                else
+                {
+                    context.Data = text;
+                }
             }
+            context.Message = message;
 
             return context;
         }
