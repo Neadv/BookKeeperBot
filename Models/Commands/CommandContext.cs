@@ -9,34 +9,40 @@ namespace BookKeeperBot.Models.Commands
         public string Parameters { get; set; }
         public string Data { get; set; }
         public bool IsCallback { get; set; }
-        public User User { get; set; }
-        public CommandState State { get; set; }
-        public string PreviousCommand { get; set; }
-        public List<Bookshelf> Bookshelves { get; set; }
         public Message Message { get; set; }
+        public User User { get; set; }
+
+        public string PreviousCommand => User?.PreviousCommand;
+
+        public CommandState State
+        {
+            get
+            {
+                if (User != null)
+                    return User.State;
+                return CommandState.NoContext;
+            }
+        }
+
         public Bookshelf SelectedBookshelf
         {
-            get => selectedBookshelf;
+            get => User?.SelectedBookshelf;
             set
             {
                 if (User != null)
                     User.SelectedBookshelf = value;
-                selectedBookshelf = value;
             }
         }
         public Book SelectedBook
         {
-            get => selectedBook;
+            get => User?.SelectedBook;
             set
             {
                 if (User != null)
                     User.SelectedBook = value;
-                selectedBook = value;
             }
         }
-
-        private Bookshelf selectedBookshelf;
-        private Book selectedBook;
+        public List<Bookshelf> Bookshelves => User?.Bookshelves;
 
         public void ChangeState(CommandState state)
         {

@@ -9,11 +9,11 @@ namespace BookKeeperBot.Models.Commands
             EnterMessage = "Enter the name of the bookshelf";
             ExistMessage = "The bookshelf has removed";
             NoExitstMessage = "There is no bookshelf with that name.\nEnter the name of an existing bookshelf";
-            Message = ExistMessage;
         }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            Message = ExistMessage;
             var bookshelf = context.SelectedBookshelf;
             if (bookshelf != null || InputData(context, out bookshelf))
             {

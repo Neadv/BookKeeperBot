@@ -36,18 +36,15 @@ namespace BookKeeperBot.Services
             {
                 var state = user.State;
 
-                context.State = state;
-                context.PreviousCommand = user.PreviousCommand;
-
                 if (state == CommandState.MainMenu)
                 {
-                    context.Bookshelves = (await bookshelfRepo.GetAllAsync(bs => bs.UserId == user.Id)).ToList();
+                    //context.Bookshelves = (await bookshelfRepo.GetAllAsync(bs => bs.UserId == user.Id)).ToList();
+                    await bookshelfRepo.GetAllAsync(bs => bs.UserId == user.Id);
                     context.SelectedBookshelf = user.SelectedBookshelf;
                 }
                 else if (state == CommandState.BookMenu)
                 {
                     await userRepo.LoadProperty(user, user => user.SelectedBook);
-                    context.SelectedBook = user.SelectedBook;
 
                     context.SelectedBookshelf = await bookshelfRepo.GetWithIncludeAsync(b => b.Id == user.SelectedBookshelfId, b => b.Books);
                 }
