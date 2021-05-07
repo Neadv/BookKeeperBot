@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BookKeeperBot.Models.Commands
 {
@@ -13,6 +14,7 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            IReplyMarkup keyboard = new ReplyKeyboardRemove();
             if (InputData(context, out Book book))
             {
                 if (book == null)
@@ -20,13 +22,15 @@ namespace BookKeeperBot.Models.Commands
                     book = new Book { Title = context.Parameters ?? context.Data, Bookshelf = context.SelectedBookshelf };
                     context.AddBook(book);
                     context.CommandName = null;
+
+                    keyboard = CommandKeyboards.BookMenuKeyboard;
                 }
                 else
                 {
                     context.CommandName = Name;
                 }
             }
-            await BotClient.SendTextMessageAsync(context.Message.Chat, Message);
+            await BotClient.SendTextMessageAsync(context.Message.Chat, Message, replyMarkup: keyboard);
         }
     }
 }

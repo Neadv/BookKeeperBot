@@ -17,12 +17,14 @@ namespace BookKeeperBot.Models.Commands
         {
             CommandState newState = CommandState.MainMenu;
             string message = "Main menu";
+            var keyboard = CommandKeyboards.MainMenuKeyboad;
 
             if (context.State == CommandState.EditBookMenu)
             {
                 context.SelectedBook = null;
                 newState = CommandState.BookMenu;
                 message = "Book menu";
+                keyboard = CommandKeyboards.BookMenuKeyboard;
             }
             else
             {
@@ -31,7 +33,7 @@ namespace BookKeeperBot.Models.Commands
             }
 
             context.ChangeState(newState);
-            await BotClient.SendTextMessageAsync(context.Message.Chat, message);
+            await BotClient.SendTextMessageAsync(context.Message.Chat, message, replyMarkup: keyboard);
         }
     }
 }

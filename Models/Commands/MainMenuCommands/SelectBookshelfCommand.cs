@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BookKeeperBot.Models.Commands
 {
@@ -12,6 +13,7 @@ namespace BookKeeperBot.Models.Commands
         public async override Task ExecuteAsync(CommandContext context)
         {
             Bookshelf bookshelf = FindItem(context);
+            IReplyMarkup keyboard = null;
 
             string message = errorMessage;
             if (bookshelf != null)
@@ -19,9 +21,14 @@ namespace BookKeeperBot.Models.Commands
                 message = selectedMessage;
                 context.SelectedBookshelf = bookshelf;
                 context.ChangeState(CommandState.BookMenu);
+
+                keyboard = CommandKeyboards.BookMenuKeyboard;
             }
 
-            await BotClient.SendTextMessageAsync(context.Message.Chat, message);
+            if (keyboard == null)
+                await BotClient.SendTextMessageAsync(context.Message.Chat, message);
+            else
+                await BotClient.SendTextMessageAsync(context.Message.Chat, message, replyMarkup: keyboard);
         }
     }
 }
