@@ -26,6 +26,7 @@ namespace BookKeeperBot.Services
             // No-Context commands
             Register(new BackToMenuCommand());
             Register(new AboutCommand());
+            Register(new ChangeStateCommand());
             
             // Main menu commands
             Register(new AddBookshelfCommand());
