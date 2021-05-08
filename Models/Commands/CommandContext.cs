@@ -88,6 +88,41 @@ namespace BookKeeperBot.Models.Commands
             }
         }
 
+        private string redirectCommandName;
+        private string redirectParameters;
+        private bool redirectCallback;
+        private CommandState redirectState;
+        
+        public void RedirectToCommand(string commandName)
+            => RedirectToCommand(commandName, State);
+
+        public void RedirectToCommand(string commandName, string parameters)
+            => RedirectToCommand(commandName, State, parameters);
+
+        public void RedirectToCommand(string commandName, CommandState state, string parameters = null, bool isCallback = false)
+        {
+            redirectCommandName = commandName;
+            redirectState = state;
+            redirectParameters = parameters;
+            redirectCallback = isCallback;
+        }
+
+        public CommandContext GetRedirectContext()
+        {
+            if (redirectCommandName == null)
+                return null;
+            
+            User.State = redirectState;
+            return new CommandContext
+            {
+                CommandName = redirectCommandName,
+                User = User,
+                Message = Message,
+                Parameters = redirectParameters,
+                IsCallback = redirectCallback
+            };
+        }
+
         public CommandString GetCommandString()
         {
             return new CommandString

@@ -55,6 +55,12 @@ namespace BookKeeperBot.Services
             {
                 await userRepo.DeleteAsync(user);
             }
+
+            var redirectContext = context.GetRedirectContext();
+            if (redirectContext != null)
+            {
+                await SelectAsync(redirectContext);
+            }
         }
 
         private Command FindCommand(CommandContext context)
