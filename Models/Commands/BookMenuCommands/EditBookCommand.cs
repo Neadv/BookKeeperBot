@@ -5,7 +5,8 @@ namespace BookKeeperBot.Models.Commands
 {
     public class EditBookCommand : FindBookCommand
     {
-        private string selectedMessage = "Edit book\n/description\n/title\n/image\n/note\n/category\n/back";
+        private string selectedMessage = "Edit book";
+        private string editMessage = "Edit:";
         private string errorMessage = "Error. There is no book with this name or id.";
 
         public EditBookCommand() : base("/edit") { }
@@ -13,26 +14,27 @@ namespace BookKeeperBot.Models.Commands
         public async override Task ExecuteAsync(CommandContext context)
         {
             Book book = FindItem(context);
-            IReplyMarkup keyboard = null;
 
-            string message;
             if (book != null)
             {
                 context.SelectedBook = book;
-                message = selectedMessage;
                 context.ChangeState(CommandState.EditBookMenu);
 
-                keyboard = new ReplyKeyboardRemove();
+                InlineKeyboardButton[][] buttons = new[]
+                {
+                    new[] { InlineKeyboardButton.WithCallbackData("Title", "/title"), InlineKeyboardButton.WithCallbackData("Description", "/description")},
+                    new[] { InlineKeyboardButton.WithCallbackData("Image", "/image"), InlineKeyboardButton.WithCallbackData("Category", "/category")},
+                    new[] { InlineKeyboardButton.WithCallbackData("Back", "/back")},
+                };
+
+                var keyboard = new InlineKeyboardMarkup(buttons);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, selectedMessage, replyMarkup: new ReplyKeyboardRemove());
+                await BotClient.SendTextMessageAsync(context.Message.Chat, editMessage, replyMarkup: keyboard);
             }
             else
             {
-                message = errorMessage;
+                await BotClient.SendTextMessageAsync(context.Message.Chat, errorMessage);
             }
-
-            if (keyboard == null)
-                await BotClient.SendTextMessageAsync(context.Message.Chat, message);
-            else
-                await BotClient.SendTextMessageAsync(context.Message.Chat, message, replyMarkup: keyboard);
         }
     }
 }

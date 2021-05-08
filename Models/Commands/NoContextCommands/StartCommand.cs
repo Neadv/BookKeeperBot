@@ -9,7 +9,7 @@ namespace BookKeeperBot.Models.Commands
                                         "/init - <em>Create an initial structure</em>\n" +
                                         "/menu - <em>Open menu</em>";
 
-        private string message = "<strong>There will be information about the bot.</strong>";
+        private string restartMessage = "<strong>There will be information about the bot.</strong>";
 
         public StartCommand()
         {
@@ -19,6 +19,7 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            string message;
             if (context.User == null)
             {
                 var telegramUser = context.Message.From;
@@ -28,13 +29,14 @@ namespace BookKeeperBot.Models.Commands
                     Username = telegramUser.Username
                 };
                 context.User = user;
-                await BotClient.SendTextMessageAsync(context.Message.Chat, messageNewUser, ParseMode.Html);
+                message = messageNewUser;
             }
             else
             {
                 context.ChangeState(CommandState.MainMenu);
-                await BotClient.SendTextMessageAsync(context.Message.Chat, message, ParseMode.Html);
+                message = restartMessage;
             }
+            await BotClient.SendTextMessageAsync(context.Message.Chat, message, ParseMode.Html);
         }
     }
 }

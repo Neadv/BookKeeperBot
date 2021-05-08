@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BookKeeperBot.Models.Commands
 {
@@ -20,6 +21,12 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            if (context.IsCallback)
+            {
+                await EditCallbackMessage(context);
+                return;
+            }
+
             IEnumerable<Book> books = context.SelectedBookshelf.Books;
 
             if (context.CommandName == inProgress)
@@ -29,12 +36,31 @@ namespace BookKeeperBot.Models.Commands
             else if (context.CommandName == planned)
                 books = context.SelectedBookshelf.GetPlanned();
 
-            var stringBuilder = new StringBuilder("Books:\n");
+            var message = "Books:";
+            IReplyMarkup keyboard = null;
+            List<List<InlineKeyboardButton>> buttons = new List<List<InlineKeyboardButton>>();
+
             foreach (var book in books)
             {
-                stringBuilder.AppendLine($"{book.Title} - /edit{book.Id}, /select{book.Id}, /remove{book.Id}");
+                var row = new List<InlineKeyboardButton>();
+                row.Add(InlineKeyboardButton.WithCallbackData(book.Title, $"/list {book.Id}"));
+                buttons.Add(row);
             }
-            await BotClient.SendTextMessageAsync(context.Message.Chat, stringBuilder.ToString());
+
+            if (buttons.Count > 0)
+                keyboard = new InlineKeyboardMarkup(buttons);
+
+            if (keyboard == null)
+                await BotClient.SendTextMessageAsync(context.Message.Chat, message);
+            else
+                await BotClient.SendTextMessageAsync(context.Message.Chat, message, replyMarkup: keyboard);
+        }
+
+        private async Task EditCallbackMessage(CommandContext context)
+        {
+            if (context.Message != null && context.Message.ReplyMarkup != InlineKeyboardMarkup.Empty())
+                await BotClient.EditMessageReplyMarkupAsync(context.Message.Chat, context.Message.MessageId, InlineKeyboardMarkup.Empty());
+            context.RedirectToCommand($"/select{context.Parameters}");
         }
     }
 }

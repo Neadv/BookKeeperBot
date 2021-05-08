@@ -1,6 +1,6 @@
 namespace BookKeeperBot.Models.Commands
 {
-    public abstract class FindCommand<T> : Command where T : class
+    public abstract class FindCommand<T> : Command
     {
         public FindCommand(string name, CommandState state)
             : base (name, state, true) { }

@@ -15,6 +15,9 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            if (context.IsCallback && context.Message != null)
+                await BotClient.EditMessageReplyMarkupAsync(context.Message.Chat, context.Message.MessageId, InlineKeyboardMarkup.Empty());
+
             CommandState newState = CommandState.MainMenu;
             string message = "Main menu";
             var keyboard = CommandKeyboards.MainMenuKeyboad;
