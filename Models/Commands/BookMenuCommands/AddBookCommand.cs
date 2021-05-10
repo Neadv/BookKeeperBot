@@ -7,6 +7,7 @@ namespace BookKeeperBot.Models.Commands
     {
         public AddBookCommand() : base("/add")
         {
+            Alias = new[] { "/add_search" };
             EnterMessage = "Enter a title for the new book";
             NoExitstMessage = "The book has added";
             ExistMessage = "There is book with that name.\nEnter a unique name";
@@ -19,11 +20,26 @@ namespace BookKeeperBot.Models.Commands
             {
                 if (book == null)
                 {
-                    book = new Book { Title = context.Parameters ?? context.Data, Bookshelf = context.SelectedBookshelf };
+                    string title = context.Parameters ?? context.Data;
+
+                    var bookAccessor = new BookDAO();
+
+                    if (context.PreviousCommand == Alias[0])
+                    {
+                        book = await bookAccessor.GetBookAsync(title);
+                    }
+
+                    if (book == null)
+                        book = new Book { Title = title };
+
+                    book.Bookshelf = context.SelectedBookshelf;
+
                     context.AddBook(book);
                     context.CommandName = null;
 
                     keyboard = CommandKeyboards.BookMenuKeyboard;
+
+                    context.RedirectToCommand("/select", book.Title);
                 }
                 else
                 {

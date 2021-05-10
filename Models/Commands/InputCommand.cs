@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace BookKeeperBot.Models.Commands
 {
     public abstract class InputCommand<T> : Command where T: class
@@ -40,7 +42,7 @@ namespace BookKeeperBot.Models.Commands
             if (command.CommandName != null)
                 return false;
 
-            return command.PreviosCommand == Name && command.ContainData;
+            return (command.PreviosCommand == Name  || Alias.Any(a => a == command.PreviosCommand)) && command.ContainData;
         }
     }
 }

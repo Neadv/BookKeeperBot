@@ -35,7 +35,7 @@ namespace BookKeeperBot.Models.Commands
                     {
                         new KeyboardButton[] { "/list" },
                         new KeyboardButton[] { "/planned", "/in_progress", "/completed" },
-                        new KeyboardButton[] { "/add" },
+                        new KeyboardButton[] { "/add", "/add_search" },
                         new KeyboardButton[] { "/remove" },
                         new KeyboardButton[] { "/help", "/back" },
                     }

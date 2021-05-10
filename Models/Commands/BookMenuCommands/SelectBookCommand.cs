@@ -1,12 +1,13 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BookKeeperBot.Models.Commands
 {
     public class SelectBookCommand : FindBookCommand
     {
-        private string selectedMessage = "Select book";
         private string errorMessage = "Error. There is no book with this name or id.";
 
         public SelectBookCommand() : base("/select") { }
@@ -24,12 +25,32 @@ namespace BookKeeperBot.Models.Commands
             if (book != null)
             {
                 context.SelectedBook = book;
-                IReplyMarkup keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[] 
-                    { 
+                IReplyMarkup keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[]
+                    {
                         InlineKeyboardButton.WithCallbackData("Edit", $"/select {book.Id}"),
                         InlineKeyboardButton.WithCallbackData("Remove", "/select")
-                    }); 
-                await BotClient.SendTextMessageAsync(context.Message.Chat, selectedMessage, replyMarkup: keyboard);
+                    });
+
+                string message = $"<strong>{book.Title}</strong>\n\n{book.Description}";
+
+                string image = null;
+                if (book.ImageId != null)
+                    image = book.ImageId;
+                else if (book.ImageUrl != null)
+                    image = book.ImageUrl;
+
+                if (image != null)
+                {
+                    var photoMessage = await BotClient.SendPhotoAsync(context.Message.Chat, image, message, ParseMode.Html, replyMarkup: keyboard);
+                    
+                    if (book.ImageId == null){
+                        book.ImageId = photoMessage.Photo?[0].FileId;
+                    }
+                }
+                else
+                {
+                    await BotClient.SendTextMessageAsync(context.Message.Chat, message, ParseMode.Html, replyMarkup: keyboard);
+                }
             }
             else
             {
@@ -41,7 +62,7 @@ namespace BookKeeperBot.Models.Commands
         {
             if (context.Message != null)
             {
-                await  BotClient.EditMessageReplyMarkupAsync(context.Message.Chat, context.Message.MessageId, InlineKeyboardMarkup.Empty());
+                await BotClient.EditMessageReplyMarkupAsync(context.Message.Chat, context.Message.MessageId, InlineKeyboardMarkup.Empty());
                 string command = string.IsNullOrEmpty(context.Parameters) ? "/remove" : $"/edit{context.Parameters}";
                 context.RedirectToCommand(command);
             }

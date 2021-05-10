@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -18,6 +19,7 @@ namespace BookKeeperBot.Models.Commands
             Name = name;
             State = state;
             Authorized = authorized;
+            Alias = Array.Empty<string>();
         }
 
         public Command() 
