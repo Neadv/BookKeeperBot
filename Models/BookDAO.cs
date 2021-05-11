@@ -9,6 +9,7 @@ namespace BookKeeperBot.Models
         private static readonly HttpClient client = new HttpClient();
 
         private const string url = "https://www.googleapis.com/books/v1/volumes?maxResults=1&q=";
+        private const int MAX_CAPTION_SIZe = 900;
 
         public async Task<Book> GetBookAsync(string title)
         {
@@ -34,6 +35,12 @@ namespace BookKeeperBot.Models
                     if (volumeInfo.Authors?.Length > 0 && volumeInfo.Description != null)
                     {
                         var authors = string.Join(", ", volumeInfo.Authors);
+
+                        if (!string.IsNullOrEmpty(volumeInfo.Description) && volumeInfo.Description.Length > MAX_CAPTION_SIZe)
+                        {
+                            volumeInfo.Description = volumeInfo.Description.Remove(MAX_CAPTION_SIZe) + "...";
+                        }
+
                         description = $"{volumeInfo.Description}\n\n<strong>{authors}</strong>";
                     }
 
