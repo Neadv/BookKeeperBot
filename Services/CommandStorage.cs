@@ -47,6 +47,7 @@ namespace BookKeeperBot.Services
             Register(new EditTitleCommand());
             Register(new EditNoteCommand());
             Register(new EditStateCommand());
+            Register(new EditImageCommand());
         }
 
         public Command Find(CommandString commandString)
