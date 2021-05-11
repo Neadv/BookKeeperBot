@@ -23,7 +23,8 @@ namespace BookKeeperBot.Models.Commands
                 InlineKeyboardButton[][] buttons = new[]
                 {
                     new[] { InlineKeyboardButton.WithCallbackData("Title", "/title"), InlineKeyboardButton.WithCallbackData("Description", "/description")},
-                    new[] { InlineKeyboardButton.WithCallbackData("Image", "/image"), InlineKeyboardButton.WithCallbackData("Category", "/category")},
+                    new[] { InlineKeyboardButton.WithCallbackData("Set image", "/image"), InlineKeyboardButton.WithCallbackData("Remove image", "/image")},
+                    new[] { InlineKeyboardButton.WithCallbackData("In progress", "/category0"), InlineKeyboardButton.WithCallbackData("Completed", "/category1"), InlineKeyboardButton.WithCallbackData("Planned", "/category2") },
                     new[] { InlineKeyboardButton.WithCallbackData("Back", "/back")},
                 };
 
