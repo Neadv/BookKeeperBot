@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BookKeeperBot.Models.Commands;
 using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace BookKeeperBot.Services
 {
@@ -14,7 +15,20 @@ namespace BookKeeperBot.Services
         {
             botClient = bot.Client;
             commands = new List<Command>();
+            RegisterCommand();
             ConfigureCommands();
+        }
+
+        private void RegisterCommand()
+        {
+            botClient.SetMyCommandsAsync(
+                new BotCommand[]
+                {
+                    new BotCommand { Command = "help", Description = "Information about what I can do and command list" },
+                    new BotCommand { Command = "back", Description = "Return to previous menu" },
+                    new BotCommand { Command = "settings", Description = "Bot settings" },
+                }
+            ).GetAwaiter().GetResult();
         }
 
         private void ConfigureCommands()
