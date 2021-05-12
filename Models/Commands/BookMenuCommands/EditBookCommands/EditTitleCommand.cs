@@ -7,7 +7,7 @@ namespace BookKeeperBot.Models.Commands
         public EditTitleCommand() : base("/title")
         {
             ExistMessage = "The book has edited";
-            EnterMessage = "Enter a new description";
+            EnterMessage = "Enter a new title";
         }
 
         public async override Task ExecuteAsync(CommandContext context)

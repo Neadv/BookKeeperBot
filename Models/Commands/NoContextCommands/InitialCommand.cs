@@ -14,10 +14,9 @@ namespace BookKeeperBot.Models.Commands
         public async override Task ExecuteAsync(CommandContext context)
         {
             context.AddBookshelf(new Bookshelf { Name = "Books" });
-            await BotClient.SendTextMessageAsync(context.Message.Chat, "New bookshelf has been added");
+            await BotClient.SendTextMessageAsync(context.Message.Chat, "I added a new bookshelf for you, it's empty for now, so fill it up ");
             
-            context.ChangeState(CommandState.MainMenu);
-            await BotClient.SendTextMessageAsync(context.Message.Chat, "Main menu");
+            context.RedirectToCommand("/back");
         }
     }
 }

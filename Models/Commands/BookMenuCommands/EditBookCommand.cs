@@ -1,12 +1,13 @@
 using System.Threading.Tasks;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BookKeeperBot.Models.Commands
 {
     public class EditBookCommand : FindBookCommand
     {
-        private string selectedMessage = "Edit book";
-        private string editMessage = "Edit:";
+        private string selectedMessage = "<em>{0}</em> selected";
+        private string editMessage = "<strong>Edit book:</strong>";
         private string errorMessage = "Error. There is no book with this name or id.";
 
         public EditBookCommand() : base("/edit") { }
@@ -29,8 +30,8 @@ namespace BookKeeperBot.Models.Commands
                 };
 
                 var keyboard = new InlineKeyboardMarkup(buttons);
-                await BotClient.SendTextMessageAsync(context.Message.Chat, selectedMessage, replyMarkup: new ReplyKeyboardRemove());
-                await BotClient.SendTextMessageAsync(context.Message.Chat, editMessage, replyMarkup: keyboard);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, string.Format(selectedMessage, book.Title), ParseMode.Html, replyMarkup: new ReplyKeyboardRemove());
+                await BotClient.SendTextMessageAsync(context.Message.Chat, editMessage, ParseMode.Html, replyMarkup: keyboard);
             }
             else
             {

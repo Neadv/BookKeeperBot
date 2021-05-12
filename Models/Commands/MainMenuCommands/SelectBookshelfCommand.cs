@@ -1,12 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BookKeeperBot.Models.Commands
 {
     public class SelectBookshelfCommand : FindBookshelfCommand
     {
-        private string selectedMessage = "Select bookshelf";
+        private string selectedMessage = "<em>{0}</em> selected";
         private string errorMessage = "Error. There is no bookshelf with this name or id.";
 
         public SelectBookshelfCommand() : base("/select") { }
@@ -25,7 +26,7 @@ namespace BookKeeperBot.Models.Commands
             string message = errorMessage;
             if (bookshelf != null)
             {
-                message = selectedMessage;
+                message = string.Format(selectedMessage, bookshelf.Name);
                 context.SelectedBookshelf = bookshelf;
                 context.ChangeState(CommandState.BookMenu);
 
@@ -34,11 +35,11 @@ namespace BookKeeperBot.Models.Commands
 
             if (keyboard == null)
             {
-                await BotClient.SendTextMessageAsync(context.Message.Chat, message);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, message, ParseMode.Html);
             }
             else
             {
-                await BotClient.SendTextMessageAsync(context.Message.Chat, message, replyMarkup: keyboard);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, message, ParseMode.Html, replyMarkup: keyboard);
 
                 keyboard = new InlineKeyboardMarkup(
                     new[]

@@ -5,11 +5,12 @@ namespace BookKeeperBot.Models.Commands
 {
     public class StartCommand : Command
     {
-        private string messageNewUser = "<strong>There will be information about the bot.</strong>\n\n" +
+        private string messageNewUser = "<strong>Hi, I am BookKeeper bot. I can keep your books and help you arrange them on the bookshelves.\n" +
+                                        "Also I can find the book and its descriptions by title. </strong>\n\n" +
                                         "/init - <em>Create an initial structure</em>\n" +
                                         "/menu - <em>Open menu</em>";
 
-        private string restartMessage = "<strong>There will be information about the bot.</strong>";
+        private string restartMessage = "<strong>Hi again</strong>";
 
         public StartCommand()
         {
@@ -19,7 +20,6 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            string message;
             if (context.User == null)
             {
                 var telegramUser = context.Message.From;
@@ -29,14 +29,13 @@ namespace BookKeeperBot.Models.Commands
                     Username = telegramUser.Username
                 };
                 context.User = user;
-                message = messageNewUser;
+                await BotClient.SendTextMessageAsync(context.Message.Chat, messageNewUser, ParseMode.Html);
             }
             else
             {
                 context.ChangeState(CommandState.MainMenu);
-                message = restartMessage;
+                await BotClient.SendTextMessageAsync(context.Message.Chat, restartMessage, ParseMode.Html, replyMarkup: CommandKeyboards.MainMenuKeyboad);
             }
-            await BotClient.SendTextMessageAsync(context.Message.Chat, message, ParseMode.Html);
         }
     }
 }

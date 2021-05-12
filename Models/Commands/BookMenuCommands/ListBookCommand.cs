@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BookKeeperBot.Models.Commands
@@ -29,31 +30,35 @@ namespace BookKeeperBot.Models.Commands
 
             IEnumerable<Book> books = context.SelectedBookshelf.Books;
 
-            if (context.CommandName == inProgress)
-                books = context.SelectedBookshelf.GetInProgress();
-            else if (context.CommandName == completed)
-                books = context.SelectedBookshelf.GetCompleted();
-            else if (context.CommandName == planned)
-                books = context.SelectedBookshelf.GetPlanned();
-
-            var message = "Books:";
-            IReplyMarkup keyboard = null;
-            List<List<InlineKeyboardButton>> buttons = new List<List<InlineKeyboardButton>>();
-
-            foreach (var book in books)
+            if (books.Count() == 0)
             {
-                var row = new List<InlineKeyboardButton>();
-                row.Add(InlineKeyboardButton.WithCallbackData(book.Title, $"/list {book.Id}"));
-                buttons.Add(row);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, "It's still empty here");
             }
 
-            if (buttons.Count > 0)
-                keyboard = new InlineKeyboardMarkup(buttons);
+            if (context.CommandName == Name || context.CommandName == inProgress)
+                await SendBooks("In progress:", context.SelectedBookshelf.GetInProgress(), context.Message.Chat);
+            if (context.CommandName == Name || context.CommandName == completed)
+                await SendBooks("Completed:", context.SelectedBookshelf.GetCompleted(), context.Message.Chat);
+            if (context.CommandName == Name || context.CommandName == planned)
+                await SendBooks("Planned:", context.SelectedBookshelf.GetPlanned(), context.Message.Chat);
+        }
 
-            if (keyboard == null)
-                await BotClient.SendTextMessageAsync(context.Message.Chat, message);
-            else
-                await BotClient.SendTextMessageAsync(context.Message.Chat, message, replyMarkup: keyboard);
+        private async Task SendBooks(string message, IEnumerable<Book> books, ChatId chatId)
+        {
+            if (books.Count() > 0)
+            {
+                List<List<InlineKeyboardButton>> buttons = new List<List<InlineKeyboardButton>>();
+
+                foreach (var book in books)
+                {
+                    var row = new List<InlineKeyboardButton>();
+                    row.Add(InlineKeyboardButton.WithCallbackData(book.Title, $"/list {book.Id}"));
+                    buttons.Add(row);
+                }
+
+                IReplyMarkup keyboard = new InlineKeyboardMarkup(buttons);
+                await BotClient.SendTextMessageAsync(chatId, message, replyMarkup: keyboard);
+            }
         }
 
         private async Task EditCallbackMessage(CommandContext context)
