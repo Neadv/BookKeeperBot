@@ -39,7 +39,7 @@ namespace BookKeeperBot.Models.Commands
                 else if (book.ImageUrl != null)
                     image = book.ImageUrl;
 
-                if (image != null)
+                if (!string.IsNullOrEmpty(image))
                 {
                     var photoMessage = await BotClient.SendPhotoAsync(context.Message.Chat, image, message, ParseMode.Html, replyMarkup: keyboard);
                     
