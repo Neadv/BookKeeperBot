@@ -87,6 +87,15 @@ namespace BookKeeperBot.Services
             }
             context.Message = message;
 
+            if (!string.IsNullOrEmpty(context.Data))
+            {
+                if (CommandKeyboards.ButtonCommands.ContainsKey(context.Data))
+                {
+                    context.CommandName = CommandKeyboards.ButtonCommands[context.Data];
+                    context.Data = null;
+                }
+            }
+
             return context;
         }
 
