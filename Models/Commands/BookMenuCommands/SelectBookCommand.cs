@@ -28,7 +28,7 @@ namespace BookKeeperBot.Models.Commands
                 IReplyMarkup keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[]
                     {
                         InlineKeyboardButton.WithCallbackData("Edit", $"/select {book.Id}"),
-                        InlineKeyboardButton.WithCallbackData("Remove", "/select")
+                        InlineKeyboardButton.WithCallbackData("Remove", "/select r")
                     });
 
                 string message = $"<strong>{book.Title}</strong>\n\n{book.Description}";
@@ -42,8 +42,9 @@ namespace BookKeeperBot.Models.Commands
                 if (!string.IsNullOrEmpty(image))
                 {
                     var photoMessage = await BotClient.SendPhotoAsync(context.Message.Chat, image, message, ParseMode.Html, replyMarkup: keyboard);
-                    
-                    if (book.ImageId == null){
+
+                    if (book.ImageId == null)
+                    {
                         book.ImageId = photoMessage.Photo?[0].FileId;
                     }
                 }
@@ -63,8 +64,11 @@ namespace BookKeeperBot.Models.Commands
             if (context.Message != null)
             {
                 await BotClient.EditMessageReplyMarkupAsync(context.Message.Chat, context.Message.MessageId, InlineKeyboardMarkup.Empty());
-                string command = string.IsNullOrEmpty(context.Parameters) ? "/remove" : $"/edit{context.Parameters}";
-                context.RedirectToCommand(command);
+
+                if (context.Parameters == "r")
+                    context.RedirectToCommand("/remove", context.SelectedBook.Title);
+                else
+                    context.RedirectToCommand($"/edit{context.Parameters}");
             }
         }
     }

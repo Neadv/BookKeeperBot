@@ -7,7 +7,7 @@ namespace BookKeeperBot.Models.Commands
     {
         public RemoveBookCommand() : base("/remove")
         {
-            EnterMessage = "Enter the tile of the book";
+            EnterMessage = "Enter the title of the book";
             ExistMessage = "The book has removed";
             NoExitstMessage = "There is no book with that title.\nEnter the title of an existing book";
             Message = ExistMessage;
@@ -15,9 +15,8 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            var book = context.SelectedBook;
             IReplyMarkup keyboard = new ReplyKeyboardRemove();
-            if (book != null || InputData(context, out book))
+            if (InputData(context, out Book book))
             {
                 if (book != null)
                 {
