@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddBookEnter" xml:space="preserve">
+    <value>Введите название новой книги</value>
+  </data>
+  <data name="AddBookError" xml:space="preserve">
+    <value>С таким названием уже есть книга\nВведите уникальное название</value>
+  </data>
+  <data name="AddBookSearchError" xml:space="preserve">
+    <value>Я не смог найти эту книгу :(, но ты можешь заполнить её сам.</value>
+  </data>
+  <data name="AddBookSearchSuccess" xml:space="preserve">
+    <value>Я смог найти эту книгу. Я надеюсь эта та книга, которую ты хотел.</value>
+  </data>
+  <data name="AddBookshelfEnter" xml:space="preserve">
+    <value>Введите названия для новой книжной полки.</value>
+  </data>
+  <data name="AddBookshelfError" xml:space="preserve">
+    <value>Уже есть книжная полка с таким название.Введите уникальное название</value>
+  </data>
+  <data name="AddBookshelfSuccess" xml:space="preserve">
+    <value>Книжная полка добавлена</value>
+  </data>
+  <data name="AddBookSuccess" xml:space="preserve">
+    <value>Книги добавлена</value>
+  </data>
+  <data name="BackBookMenu" xml:space="preserve">
+    <value>Мы сейчас в книжной полке</value>
+  </data>
+  <data name="BackMainMenu" xml:space="preserve">
+    <value>Мы сейчас в главном меню</value>
+  </data>
+  <data name="BookEditCategoryError" xml:space="preserve">
+    <value>Неверное значение. Введите правильное состояние</value>
+  </data>
+  <data name="BookEditDescEnter" xml:space="preserve">
+    <value>Введите новое описание</value>
+  </data>
+  <data name="BookEditImageEnter" xml:space="preserve">
+    <value>Отправить новое изображение</value>
+  </data>
+  <data name="BookEditImageRemove" xml:space="preserve">
+    <value>Изображение было удалено</value>
+  </data>
+  <data name="BookEditImageSuccess" xml:space="preserve">
+    <value>Изображение было изменено</value>
+  </data>
+  <data name="BookEditNoteEnter" xml:space="preserve">
+    <value>Введите новую заметку</value>
+  </data>
+  <data name="BookEditSuccess" xml:space="preserve">
+    <value>Книга отредактирована</value>
+  </data>
+  <data name="BookEditTitleEnter" xml:space="preserve">
+    <value>Введите новый заголовок</value>
+  </data>
+  <data name="ChangeState" xml:space="preserve">
+    <value>Состояние изменено</value>
+  </data>
+  <data name="EditBookBack" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="EditBookCompleted" xml:space="preserve">
+    <value>Прочитанные</value>
+  </data>
+  <data name="EditBookDesc" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="EditBookEdit" xml:space="preserve">
+    <value>Редактировать книгу:</value>
+  </data>
+  <data name="EditBookError" xml:space="preserve">
+    <value>Ошибка. Нет книги с таким названием или ID.</value>
+  </data>
+  <data name="EditBookInProgress" xml:space="preserve">
+    <value>В процессе</value>
+  </data>
+  <data name="EditBookPlanned" xml:space="preserve">
+    <value>Запланированно</value>
+  </data>
+  <data name="EditBookRemoveImage" xml:space="preserve">
+    <value>Удалить картинку</value>
+  </data>
+  <data name="EditBookSelected" xml:space="preserve">
+    <value>выбрана</value>
+  </data>
+  <data name="EditBookSetImage" xml:space="preserve">
+    <value>Картинка</value>
+  </data>
+  <data name="EditBookshelfEnter" xml:space="preserve">
+    <value>Введите новое название для выбранной книжной полки:</value>
+  </data>
+  <data name="EditBookshelfErrorName" xml:space="preserve">
+    <value>Ошибка. Уже есть книжная полка с таким именем.</value>
+  </data>
+  <data name="EditBookshelfNoExist" xml:space="preserve">
+    <value>Ошибка. Нет книжной полки с таким названием или ID.</value>
+  </data>
+  <data name="EditBookshelfSuccess" xml:space="preserve">
+    <value>Книжная полка отредактирована.</value>
+  </data>
+  <data name="EditBookTitle" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="EditButton" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="HelpAddBook" xml:space="preserve">
+    <value>добавить новую книгу</value>
+  </data>
+  <data name="HelpAddBookshelf" xml:space="preserve">
+    <value>добавить новую книжную полку</value>
+  </data>
+  <data name="HelpBookCommands" xml:space="preserve">
+    <value>/add - добавить новую книгу{0}/add_search - найти книгу по названию{0}/remove - удалить существующую книгу{0}/list - показать все книги{0}/in_progress - показать книги в процессе чтения{0}/completed - показать прочитанные книги{0}/planned - показать запланированные книги</value>
+  </data>
+  <data name="HelpBookMenu" xml:space="preserve">
+    <value>В этом меню вы можете просматривать, редактировать и удалять книги</value>
+  </data>
+  <data name="HelpBookMenuCommands" xml:space="preserve">
+    <value>Список команд в книжной полке:</value>
+  </data>
+  <data name="HelpCompletedBooks" xml:space="preserve">
+    <value>показать прочитанные книги</value>
+  </data>
+  <data name="HelpEditBookCommands" xml:space="preserve">
+    <value>/title - редактировать название книги{0}/description - редактировать описание книги{0}/note - редактировать заметку{0}/category - изменить категорию{0}/image - изменить изображение{0}/image_remove - удалить изображение</value>
+  </data>
+  <data name="HelpEditBookMenu" xml:space="preserve">
+    <value>В этом меню вы можете редактировать все параметры выбранной книги</value>
+  </data>
+  <data name="HelpEditCategory" xml:space="preserve">
+    <value>изменить категорию</value>
+  </data>
+  <data name="HelpEditCommands" xml:space="preserve">
+    <value>Список команд редактирования книги:</value>
+  </data>
+  <data name="HelpEditDesc" xml:space="preserve">
+    <value>редактировать описание книги</value>
+  </data>
+  <data name="HelpEditImage" xml:space="preserve">
+    <value>изменить изображение</value>
+  </data>
+  <data name="HelpEditNote" xml:space="preserve">
+    <value>редактировать заметку</value>
+  </data>
+  <data name="HelpEditTitle" xml:space="preserve">
+    <value>редактировать название книги</value>
+  </data>
+  <data name="HelpInProgressBooks" xml:space="preserve">
+    <value>показать книги в процессе чтения</value>
+  </data>
+  <data name="HelpListBooks" xml:space="preserve">
+    <value>показать все книги</value>
+  </data>
+  <data name="HelpListBooksheves" xml:space="preserve">
+    <value>показать все книжные полки</value>
+  </data>
+  <data name="HelpMainCommands" xml:space="preserve">
+    <value>/add - добавить новую книжную полку{0}/remove - удалить существующую книжную полку{0} /list - показать все книжные полки</value>
+  </data>
+  <data name="HelpMainMenu" xml:space="preserve">
+    <value>В этом меню вы можете просматривать, редактировать и удалять книжные полки</value>
+  </data>
+  <data name="HelpMainMenuCommands" xml:space="preserve">
+    <value>Список команд в главном меню:</value>
+  </data>
+  <data name="HelpPlannedBooks" xml:space="preserve">
+    <value>показать запланированные книги</value>
+  </data>
+  <data name="HelpRemoveBook" xml:space="preserve">
+    <value>удалить существующую книгу</value>
+  </data>
+  <data name="HelpRemoveBookshelf" xml:space="preserve">
+    <value>удалить существующую книжную полку</value>
+  </data>
+  <data name="HelpRemoveImage" xml:space="preserve">
+    <value>удалить изображение</value>
+  </data>
+  <data name="HelpSearchBook" xml:space="preserve">
+    <value>найти книгу по названию</value>
+  </data>
+  <data name="Init" xml:space="preserve">
+    <value>Я добавил для вас новую книжную полку, она пока пуста, так что заполните ее</value>
+  </data>
+  <data name="InitBookshelfName" xml:space="preserve">
+    <value>Книги</value>
+  </data>
+  <data name="InitDescription" xml:space="preserve">
+    <value>создать начальную структуру</value>
+  </data>
+  <data name="KeyboardAddBook" xml:space="preserve">
+    <value>Добавить новую книгу</value>
+  </data>
+  <data name="KeyboardAddBookshelf" xml:space="preserve">
+    <value>Добавить новую книжную полку</value>
+  </data>
+  <data name="KeyboardBack" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="KeyboardBooks" xml:space="preserve">
+    <value>Книги</value>
+  </data>
+  <data name="KeyboardBookshelves" xml:space="preserve">
+    <value>Книжные полки</value>
+  </data>
+  <data name="KeyboardCompleted" xml:space="preserve">
+    <value>Завершенные</value>
+  </data>
+  <data name="KeyboardHelp" xml:space="preserve">
+    <value>Помощь</value>
+  </data>
+  <data name="KeyboardInProgress" xml:space="preserve">
+    <value>В процессе</value>
+  </data>
+  <data name="KeyboardPlanned" xml:space="preserve">
+    <value>Запланированные</value>
+  </data>
+  <data name="KeyboardRemoveBook" xml:space="preserve">
+    <value>Удалить книгу</value>
+  </data>
+  <data name="KeyboardRemoveBookshelf" xml:space="preserve">
+    <value>Удалить книжную полку</value>
+  </data>
+  <data name="KeyboardSearch" xml:space="preserve">
+    <value>Найти книгу</value>
+  </data>
+  <data name="KeyboardSettings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="ListBooksCompleted" xml:space="preserve">
+    <value>Прочитанные:</value>
+  </data>
+  <data name="ListBooksEmpty" xml:space="preserve">
+    <value>Здесь все еще пусто</value>
+  </data>
+  <data name="ListBookshelves" xml:space="preserve">
+    <value>Книжные полки:</value>
+  </data>
+  <data name="ListBooksInProgress" xml:space="preserve">
+    <value>В процессе чтения:</value>
+  </data>
+  <data name="ListBooksPlanned" xml:space="preserve">
+    <value>Запланированные:</value>
+  </data>
+  <data name="MenuDescription" xml:space="preserve">
+    <value>открыть меню</value>
+  </data>
+  <data name="RemoveBookEnter" xml:space="preserve">
+    <value>Введите название книги</value>
+  </data>
+  <data name="RemoveBookError" xml:space="preserve">
+    <value>Нет книги с таким названием.Введите название существующей книги.</value>
+  </data>
+  <data name="RemoveBookshelfEnter" xml:space="preserve">
+    <value>Введите название книжной полки</value>
+  </data>
+  <data name="RemoveBookshelfError" xml:space="preserve">
+    <value>Книжной полки с таким названием нет.Введите имя существующей книжной полки.</value>
+  </data>
+  <data name="RemoveBookshelfSuccess" xml:space="preserve">
+    <value>Книжная полка удаленна</value>
+  </data>
+  <data name="RemoveBookSuccess" xml:space="preserve">
+    <value>Книга удаленна</value>
+  </data>
+  <data name="RemoveButton" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Привет снова!</value>
+  </data>
+  <data name="SelectBookError" xml:space="preserve">
+    <value>Ошибка. Нет книги с таким названием или ID.</value>
+  </data>
+  <data name="SelectBookshelfError" xml:space="preserve">
+    <value>Ошибка. Книжной полки с таким именем или ID нет.</value>
+  </data>
+  <data name="SelectBookshelfSelected" xml:space="preserve">
+    <value>выбрана</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Привет, я бот Хранитель книг. Я могу сохранить ваши книги и помочь вам разложить их по книжным полкам.Также я могу найти книгу и ее описания по названию.</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+</root>

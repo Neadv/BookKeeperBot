@@ -4,14 +4,14 @@ namespace BookKeeperBot.Models.Commands
 {
     public class EditTitleCommand : InputStringCommand
     {
-        public EditTitleCommand() : base("/title")
-        {
-            ExistMessage = "The book has edited";
-            EnterMessage = "Enter a new title";
-        }
+        public EditTitleCommand() 
+            : base("/title") { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            ExistMessage = Localizer["BookEditSuccess"];
+            EnterMessage = Localizer["BookEditTitleEnter"];
+
             if (InputData(context, out string title))
             {
                 if (title != null && context.SelectedBook != null)

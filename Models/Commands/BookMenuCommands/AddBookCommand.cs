@@ -8,13 +8,14 @@ namespace BookKeeperBot.Models.Commands
         public AddBookCommand() : base("/add")
         {
             Alias = new[] { "/add_search" };
-            EnterMessage = "Enter a title for the new book";
-            NoExitstMessage = "The book has added";
-            ExistMessage = "There is book with that name.\nEnter a unique name";
         }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            EnterMessage = Localizer["AddBookEnter"];
+            NoExitstMessage = Localizer["AddBookSuccess"];
+            ExistMessage = Localizer["AddBookError"];
+
             IReplyMarkup keyboard = new ReplyKeyboardRemove();
             if (InputData(context, out Book book))
             {
@@ -31,11 +32,11 @@ namespace BookKeeperBot.Models.Commands
                     {
                         book = new Book { Title = title };
                         if (context.PreviousCommand == Alias[0])
-                            await BotClient.SendTextMessageAsync(context.Message.Chat, "I couldn't find this book :(, but you can fill it out yourself.");
+                            await BotClient.SendTextMessageAsync(context.Message.Chat, Localizer["AddBookSearchError"]);
                     }
                     else if (context.PreviousCommand == Alias[0])
                     {
-                        await BotClient.SendTextMessageAsync(context.Message.Chat, "I found this book. I hope this is the book you wanted.");
+                        await BotClient.SendTextMessageAsync(context.Message.Chat, Localizer["AddBookSearchSuccess"]);
                     }
 
                     book.Bookshelf = context.SelectedBookshelf;
@@ -43,7 +44,7 @@ namespace BookKeeperBot.Models.Commands
                     context.AddBook(book);
                     context.CommandName = null;
 
-                    keyboard = CommandKeyboards.BookMenuKeyboard;
+                    keyboard = CommandKeyboards.GetBookMenu(Localizer);
 
                     context.RedirectToCommand("/select", book.Title);
                 }

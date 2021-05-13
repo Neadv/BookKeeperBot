@@ -8,8 +8,6 @@ namespace BookKeeperBot.Models.Commands
 {
     public class SelectBookCommand : FindBookCommand
     {
-        private string errorMessage = "Error. There is no book with this name or id.";
-
         public SelectBookCommand() : base("/select") { }
 
         public async override Task ExecuteAsync(CommandContext context)
@@ -27,8 +25,8 @@ namespace BookKeeperBot.Models.Commands
                 context.SelectedBook = book;
                 IReplyMarkup keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[]
                     {
-                        InlineKeyboardButton.WithCallbackData("Edit", $"/select {book.Id}"),
-                        InlineKeyboardButton.WithCallbackData("Remove", "/select r")
+                        InlineKeyboardButton.WithCallbackData(Localizer["EditButton"], $"/select {book.Id}"),
+                        InlineKeyboardButton.WithCallbackData(Localizer["RemoveButton"], "/select r")
                     });
 
                 string message = $"<strong>{book.Title}</strong>\n\n{book.Description}";
@@ -55,7 +53,7 @@ namespace BookKeeperBot.Models.Commands
             }
             else
             {
-                await BotClient.SendTextMessageAsync(context.Message.Chat, errorMessage);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, Localizer["SelectBookError"]);
             }
         }
 

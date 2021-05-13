@@ -4,21 +4,17 @@ namespace BookKeeperBot.Models.Commands
 {
     public class EditImageCommand : Command
     {
-        private string removeMessage;
-        private string enterMessage;
-        private string editMessage;
-
         public EditImageCommand() : base("/image", CommandState.EditBookMenu, true)
         {
             Alias = new[] { "/remove_image" };
-
-            removeMessage = "The image was removed";
-            editMessage = "The image was changed";
-            enterMessage = "Send new image";
         }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            string removeMessage = Localizer["BookEditImageRemove"];
+            string editMessage = Localizer["BookEditImageSuccess"];
+            string enterMessage = Localizer["BookEditImageEnter"];
+
             var book = context.SelectedBook;
             if (book == null)
                 return;

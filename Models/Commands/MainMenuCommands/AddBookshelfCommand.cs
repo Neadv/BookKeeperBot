@@ -5,15 +5,15 @@ namespace BookKeeperBot.Models.Commands
 {
     public class AddBookshelfCommand : InputBookshelfCommand
     {
-        public AddBookshelfCommand() : base("/add")
-        {
-            EnterMessage = "Enter a name for the new bookshelf";
-            NoExitstMessage = "The bookshelf has added";
-            ExistMessage = "There is bookshelf with that name.\nEnter a unique name";
-        }
+        public AddBookshelfCommand() 
+            : base("/add") { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            EnterMessage = Localizer["AddBookshelfEnter"];
+            NoExitstMessage = Localizer["AddBookshelfSuccess"];
+            ExistMessage = Localizer["AddBookshelfError"];
+
             IReplyMarkup keyboard = new ReplyKeyboardRemove();
             if (InputData(context, out Bookshelf bookshelf))
             {
@@ -23,7 +23,7 @@ namespace BookKeeperBot.Models.Commands
                     context.AddBookshelf(bookshelf);
                     context.CommandName = null;
                     
-                    keyboard = CommandKeyboards.MainMenuKeyboad;
+                    keyboard = CommandKeyboards.GetMainMenu(Localizer);
                 }
                 else
                 {

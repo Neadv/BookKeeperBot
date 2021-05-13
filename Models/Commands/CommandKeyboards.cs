@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -5,61 +6,63 @@ namespace BookKeeperBot.Models.Commands
 {
     public static class CommandKeyboards
     {
-        public static Dictionary<string, string> ButtonCommands { get; } = new Dictionary<string, string>
+        public static IReplyMarkup GetBookMenu(IStringLocalizer localizer)
         {
-            { "Bookshelves", "/list" },
-            { "Books", "/list" },
-            { "Add new bookshelf", "/add" },
-            { "Add new book", "/add" },
-            { "Remove existing bookshelf", "/remove" },
-            { "Remove existing book", "/remove" },
-            { "Help", "/help" },
-            { "Back", "/back" },
-            { "Search for a book", "/add_search" },
-            { "Planned", "/planned" },
-            { "In progress", "/in_progress" },
-            { "Completed", "/completed" },
-        };
-
-        private static IReplyMarkup mainMenuKeyboard;
-        public static IReplyMarkup MainMenuKeyboad
-        {
-            get
+            return new ReplyKeyboardMarkup
             {
-                return mainMenuKeyboard ??= new ReplyKeyboardMarkup
-                {
-                    OneTimeKeyboard = false,
-                    ResizeKeyboard = true,
-                    Keyboard = new KeyboardButton[][]
+                OneTimeKeyboard = false,
+                ResizeKeyboard = true,
+                Keyboard = new KeyboardButton[][]
                     {
-                        new KeyboardButton[] { "Bookshelves" },
-                        new KeyboardButton[] { "Add new bookshelf" },
-                        new KeyboardButton[] { "Remove existing bookshelf" },
-                        new KeyboardButton[] { "Help", "Settings" },
+                        new KeyboardButton[] { localizer["KeyboardBooks"].Value },
+                        new KeyboardButton[] { localizer["KeyboardPlanned"].Value, localizer["KeyboardInProgress"].Value, localizer["KeyboardCompleted"].Value },
+                        new KeyboardButton[] { localizer["KeyboardAddBook"].Value, localizer["KeyboardSearch"].Value },
+                        new KeyboardButton[] { localizer["KeyboardRemoveBook"].Value },
+                        new KeyboardButton[] { localizer["KeyboardHelp"].Value, localizer["KeyboardBack"].Value },
                     }
-                };
-            }
+            };
         }
 
-        private static IReplyMarkup bookMenuKeyboard;
-        public static IReplyMarkup BookMenuKeyboard
+        public static IReplyMarkup GetMainMenu(IStringLocalizer localizer)
         {
-            get
+            return new ReplyKeyboardMarkup
             {
-                return bookMenuKeyboard ??= new ReplyKeyboardMarkup
-                {
-                    OneTimeKeyboard = false,
-                    ResizeKeyboard = true,
-                    Keyboard = new KeyboardButton[][]
+                OneTimeKeyboard = false,
+                ResizeKeyboard = true,
+                Keyboard = new KeyboardButton[][]
                     {
-                        new KeyboardButton[] { "Books" },
-                        new KeyboardButton[] { "Planned", "In progress", "Completed" },
-                        new KeyboardButton[] { "Add new book", "Search for a book" },
-                        new KeyboardButton[] { "Remove existing book" },
-                        new KeyboardButton[] { "Help", "Back" },
+                        new KeyboardButton[] { localizer["KeyboardBookshelves"].Value },
+                        new KeyboardButton[] { localizer["KeyboardAddBookshelf"].Value },
+                        new KeyboardButton[] { localizer["KeyboardRemoveBookshelf"].Value },
+                        new KeyboardButton[] { localizer["KeyboardHelp"].Value, localizer["KeyboardSettings"].Value },
                     }
-                };
-            }
+            };
+        }
+
+        public static string SubstitutedCommand(IStringLocalizer localizer, string command)
+        {
+            if (command == localizer["KeyboardBookshelves"] || command == localizer["KeyboardBooks"])
+                return "/list";
+            if (command == localizer["KeyboardAddBookshelf"] || command == localizer["KeyboardAddBook"])
+                return "/add";
+            if (command == localizer["KeyboardRemoveBookshelf"] || command == localizer["KeyboardRemoveBook"])
+                return "/remove";
+            if (command == localizer["KeyboardHelp"])
+                return "/help";
+            if (command == localizer["KeyboardSettings"])
+                return "/setting";
+            if (command == localizer["KeyboardSearch"])
+                return "/add_search";
+            if (command == localizer["KeyboardPlanned"])
+                return "/planned";
+            if (command == localizer["KeyboardInProgress"])
+                return "/in_progress";
+            if (command == localizer["KeyboardCompleted"])
+                return "/completed";
+            if (command == localizer["KeyboardBack"])
+                return "/back";
+
+            return null;
         }
     }
 }

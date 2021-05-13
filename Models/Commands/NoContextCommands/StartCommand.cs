@@ -5,12 +5,11 @@ namespace BookKeeperBot.Models.Commands
 {
     public class StartCommand : Command
     {
-        private string messageNewUser = "<strong>Hi, I am BookKeeper bot. I can keep your books and help you arrange them on the bookshelves.\n" +
-                                        "Also I can find the book and its descriptions by title. </strong>\n\n" +
-                                        "/init - <em>Create an initial structure</em>\n" +
-                                        "/menu - <em>Open menu</em>";
+        private string messageNewUser = "<strong>{0}</strong>\n\n" +
+                                        "/init - <em>{1}</em>\n" +
+                                        "/menu - <em>{2}</em>";
 
-        private string restartMessage = "<strong>Hi again</strong>";
+        private string restartMessage = "<strong>{0}</strong>";
 
         public StartCommand()
         {
@@ -22,6 +21,8 @@ namespace BookKeeperBot.Models.Commands
         {
             if (context.User == null)
             {
+                var message = string.Format(messageNewUser, Localizer["Start"], Localizer["InitDescription"], Localizer["MenuDescription"]);
+
                 var telegramUser = context.Message.From;
                 var user = new User
                 {
@@ -29,12 +30,12 @@ namespace BookKeeperBot.Models.Commands
                     Username = telegramUser.Username
                 };
                 context.User = user;
-                await BotClient.SendTextMessageAsync(context.Message.Chat, messageNewUser, ParseMode.Html);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, message, ParseMode.Html);
             }
             else
             {
                 context.ChangeState(CommandState.MainMenu);
-                await BotClient.SendTextMessageAsync(context.Message.Chat, restartMessage, ParseMode.Html, replyMarkup: CommandKeyboards.MainMenuKeyboad);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, string.Format(restartMessage, Localizer["Restart"]), ParseMode.Html, replyMarkup: CommandKeyboards.GetMainMenu(Localizer));
             }
         }
     }

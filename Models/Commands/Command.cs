@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace BookKeeperBot.Models.Commands
         public string Name { get; set; }
         public CommandState State { get; set; }
         public ITelegramBotClient BotClient { get; set; }
+        public IStringLocalizer Localizer { get; set; }
 
         protected bool Authorized { get; set; }
         protected string[] Alias { get; set; }

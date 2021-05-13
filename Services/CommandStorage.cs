@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using BookKeeperBot.Models.Commands;
+using Microsoft.Extensions.Localization;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -8,12 +8,15 @@ namespace BookKeeperBot.Services
 {
     public class CommandStorage : ICommandStorage
     {
-        private ITelegramBotClient botClient;
+        private readonly ITelegramBotClient botClient;
+        private readonly IStringLocalizer<Command> localizer;
+
         private List<Command> commands;
 
-        public CommandStorage(IBotService bot)
+        public CommandStorage(IBotService bot, IStringLocalizer<Command> stringLocalizer)
         {
             botClient = bot.Client;
+            localizer = stringLocalizer;
             commands = new List<Command>();
             RegisterCommand();
             ConfigureCommands();
@@ -73,6 +76,7 @@ namespace BookKeeperBot.Services
         public void Register(Command newCommand)
         {
             newCommand.BotClient = botClient;
+            newCommand.Localizer = localizer;
             commands.Add(newCommand);
         }
     }

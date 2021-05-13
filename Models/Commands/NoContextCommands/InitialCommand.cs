@@ -13,8 +13,8 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            context.AddBookshelf(new Bookshelf { Name = "Books" });
-            await BotClient.SendTextMessageAsync(context.Message.Chat, "I added a new bookshelf for you, it's empty for now, so fill it up ");
+            context.AddBookshelf(new Bookshelf { Name = Localizer["InitBookshelfName"] });
+            await BotClient.SendTextMessageAsync(context.Message.Chat, Localizer["Init"]);
             
             context.RedirectToCommand("/back");
         }

@@ -5,17 +5,14 @@ namespace BookKeeperBot.Models.Commands
 {
     public class EditStateCommand : Command
     {
-        private string errorMessage;
-        private string existMessage;
-
         public EditStateCommand() : base("/category", CommandState.EditBookMenu, true)
-        {
-            existMessage = "The book has edited";
-            errorMessage = "Incorrect value. Enter a correct state";
-        }
+        { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            string existMessage = Localizer["BookEditSuccess"];
+            string errorMessage = Localizer["BookEditCategoryError"];
+
             string message = errorMessage;
 
             string input = context.Parameters;

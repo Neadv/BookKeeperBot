@@ -6,23 +6,18 @@ namespace BookKeeperBot.Models.Commands
 {
     public class EditBookshelfCommand : FindBookshelfCommand
     {
-        private string enterMessage = "Enter a new name for the selected bookshelf.";
-        private string editedMessage = "The bookshelf has edited.";
-        private string errorMessage = "Error. There is no bookshelf with this name or id.";
-        private string errorNameMessage = "Error. There is bookshelf with this name.";
-
         public EditBookshelfCommand() : base("/edit") { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            string message = enterMessage;
-            IReplyMarkup keyboard = CommandKeyboards.MainMenuKeyboad;
+            string message = Localizer["Enter a new name for the selected bookshelf:"];
+            IReplyMarkup keyboard = CommandKeyboards.GetMainMenu(Localizer);
             if (context.SelectedBookshelf == null || CheckParameters(context))
             {
                 context.SelectedBookshelf = FindItem(context);
                 if (context.SelectedBookshelf == null)
                 {
-                    message = errorMessage;
+                    message = Localizer["EditBookshelfNoExist"];
                 }
             }
             else if (context.Data != null && context.SelectedBookshelf != null)
@@ -32,15 +27,15 @@ namespace BookKeeperBot.Models.Commands
                     context.SelectedBookshelf.Name = context.Data;
                     context.SelectedBookshelf = null;
 
-                    message = editedMessage;
+                    message = Localizer["EditBookshelfSuccess"];
                 }
                 else
                 {
-                    message = errorNameMessage;
+                    message = Localizer["EditBookshelfErrorName"];
                 }
             }
             
-            if(message == enterMessage)
+            if(message == Localizer["Enter a new name for the selected bookshelf:"])
                 keyboard = new ReplyKeyboardRemove();
 
             await BotClient.SendTextMessageAsync(context.Message.Chat, message, replyMarkup: keyboard);

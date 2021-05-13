@@ -4,14 +4,14 @@ namespace BookKeeperBot.Models.Commands
 {
     public class EditDescriptionCommand : InputStringCommand
     {
-        public EditDescriptionCommand() : base("/description")
-        {
-            ExistMessage = "The book has edited";
-            EnterMessage = "Enter a new description";
-        }
+        public EditDescriptionCommand() 
+            : base("/description") { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            ExistMessage = Localizer["BookEditSuccess"];
+            EnterMessage = Localizer["BookEditDescEnter"];
+
             if (InputData(context, out string description))
             {
                 if (description != null && context.SelectedBook != null)

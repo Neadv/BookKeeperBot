@@ -19,15 +19,15 @@ namespace BookKeeperBot.Models.Commands
                 await BotClient.EditMessageReplyMarkupAsync(context.Message.Chat, context.Message.MessageId, InlineKeyboardMarkup.Empty());
 
             CommandState newState = CommandState.MainMenu;
-            string message = "We are now in the Main menu";
-            var keyboard = CommandKeyboards.MainMenuKeyboad;
+            string message = Localizer["BackMainMenu"];
+            var keyboard = CommandKeyboards.GetMainMenu(Localizer);
 
             if (context.State == CommandState.EditBookMenu)
             {
                 context.SelectedBook = null;
                 newState = CommandState.BookMenu;
-                message = "We are now in the Book menu";
-                keyboard = CommandKeyboards.BookMenuKeyboard;
+                message = Localizer["BackBookMenu"];
+                keyboard = CommandKeyboards.GetBookMenu(Localizer);
             }
             else
             {

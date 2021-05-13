@@ -6,9 +6,8 @@ namespace BookKeeperBot.Models.Commands
 {
     public class EditBookCommand : FindBookCommand
     {
-        private string selectedMessage = "<em>{0}</em> selected";
-        private string editMessage = "<strong>Edit book:</strong>";
-        private string errorMessage = "Error. There is no book with this name or id.";
+        private string selectedMessage = "<em>{0}</em> {1}";
+        private string editMessage = "<strong>{0}</strong>";
 
         public EditBookCommand() : base("/edit") { }
 
@@ -23,19 +22,19 @@ namespace BookKeeperBot.Models.Commands
 
                 InlineKeyboardButton[][] buttons = new[]
                 {
-                    new[] { InlineKeyboardButton.WithCallbackData("Title", "/title"), InlineKeyboardButton.WithCallbackData("Description", "/description")},
-                    new[] { InlineKeyboardButton.WithCallbackData("Set image", "/image"), InlineKeyboardButton.WithCallbackData("Remove image", "/remove_image")},
-                    new[] { InlineKeyboardButton.WithCallbackData("In progress", "/category0"), InlineKeyboardButton.WithCallbackData("Completed", "/category1"), InlineKeyboardButton.WithCallbackData("Planned", "/category2") },
-                    new[] { InlineKeyboardButton.WithCallbackData("Back", "/back")},
+                    new[] { InlineKeyboardButton.WithCallbackData(Localizer["EditBookTitle"], "/title"), InlineKeyboardButton.WithCallbackData(Localizer["EditBookDesc"], "/description")},
+                    new[] { InlineKeyboardButton.WithCallbackData(Localizer["EditBookSetImage"], "/image"), InlineKeyboardButton.WithCallbackData(Localizer["EditBookRemoveImage"], "/remove_image")},
+                    new[] { InlineKeyboardButton.WithCallbackData(Localizer["EditBookInProgress"], "/category0"), InlineKeyboardButton.WithCallbackData(Localizer["EditBookCompleted"], "/category1"), InlineKeyboardButton.WithCallbackData(Localizer["EditBookPlanned"], "/category2") },
+                    new[] { InlineKeyboardButton.WithCallbackData(Localizer["EditBookBack"], "/back")},
                 };
 
                 var keyboard = new InlineKeyboardMarkup(buttons);
-                await BotClient.SendTextMessageAsync(context.Message.Chat, string.Format(selectedMessage, book.Title), ParseMode.Html, replyMarkup: new ReplyKeyboardRemove());
-                await BotClient.SendTextMessageAsync(context.Message.Chat, editMessage, ParseMode.Html, replyMarkup: keyboard);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, string.Format(selectedMessage, book.Title, Localizer["EditBookSelected"]), ParseMode.Html, replyMarkup: new ReplyKeyboardRemove());
+                await BotClient.SendTextMessageAsync(context.Message.Chat, string.Format(editMessage, Localizer["EditBookEdit"]), ParseMode.Html, replyMarkup: keyboard);
             }
             else
             {
-                await BotClient.SendTextMessageAsync(context.Message.Chat, errorMessage);
+                await BotClient.SendTextMessageAsync(context.Message.Chat, Localizer["EditBookError"]);
             }
         }
     }

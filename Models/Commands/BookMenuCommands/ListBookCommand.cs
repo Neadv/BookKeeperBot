@@ -32,15 +32,15 @@ namespace BookKeeperBot.Models.Commands
 
             if (books.Count() == 0)
             {
-                await BotClient.SendTextMessageAsync(context.Message.Chat, "It's still empty here");
+                await BotClient.SendTextMessageAsync(context.Message.Chat, Localizer["ListBooksEmpty"]);
             }
 
             if (context.CommandName == Name || context.CommandName == inProgress)
-                await SendBooks("In progress:", context.SelectedBookshelf.GetInProgress(), context.Message.Chat);
+                await SendBooks(Localizer["ListBooksInProgress"], context.SelectedBookshelf.GetInProgress(), context.Message.Chat);
             if (context.CommandName == Name || context.CommandName == completed)
-                await SendBooks("Completed:", context.SelectedBookshelf.GetCompleted(), context.Message.Chat);
+                await SendBooks(Localizer["ListBooksCompleted"], context.SelectedBookshelf.GetCompleted(), context.Message.Chat);
             if (context.CommandName == Name || context.CommandName == planned)
-                await SendBooks("Planned:", context.SelectedBookshelf.GetPlanned(), context.Message.Chat);
+                await SendBooks(Localizer["ListBooksPlanned"], context.SelectedBookshelf.GetPlanned(), context.Message.Chat);
         }
 
         private async Task SendBooks(string message, IEnumerable<Book> books, ChatId chatId)

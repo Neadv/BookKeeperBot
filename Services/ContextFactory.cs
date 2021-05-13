@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BookKeeperBot.Models;
 using BookKeeperBot.Models.Commands;
+using Microsoft.Extensions.Localization;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
@@ -11,11 +12,13 @@ namespace BookKeeperBot.Services
     {
         private readonly IRepository<Models.User> userRepo;
         private readonly IRepository<Bookshelf> bookshelfRepo;
+        private readonly IStringLocalizer<Command> localizer;
 
-        public ContextFactory(IRepository<Models.User> userRepository, IRepository<Bookshelf> bookshelfRepository)
+        public ContextFactory(IRepository<Models.User> userRepository, IRepository<Bookshelf> bookshelfRepository, IStringLocalizer<Command> stringLocalizer)
         {
             userRepo = userRepository;
             bookshelfRepo = bookshelfRepository;
+            localizer = stringLocalizer;
         }
 
         public async Task<CommandContext> CreateContextAsync(Update update)
@@ -89,9 +92,10 @@ namespace BookKeeperBot.Services
 
             if (!string.IsNullOrEmpty(context.Data))
             {
-                if (CommandKeyboards.ButtonCommands.ContainsKey(context.Data))
+                var substitutedCommand = CommandKeyboards.SubstitutedCommand(localizer, context.Data);
+                if (substitutedCommand != null)
                 {
-                    context.CommandName = CommandKeyboards.ButtonCommands[context.Data];
+                    context.CommandName = substitutedCommand;
                     context.Data = null;
                 }
             }

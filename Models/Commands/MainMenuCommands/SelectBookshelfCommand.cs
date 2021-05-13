@@ -7,8 +7,7 @@ namespace BookKeeperBot.Models.Commands
 {
     public class SelectBookshelfCommand : FindBookshelfCommand
     {
-        private string selectedMessage = "<em>{0}</em> selected";
-        private string errorMessage = "Error. There is no bookshelf with this name or id.";
+        private string selectedMessage = "<em>{0}</em> {1}";
 
         public SelectBookshelfCommand() : base("/select") { }
 
@@ -23,14 +22,14 @@ namespace BookKeeperBot.Models.Commands
             Bookshelf bookshelf = FindItem(context);
             IReplyMarkup keyboard = null;
 
-            string message = errorMessage;
+            string message = Localizer["SelectBookshelfError"];
             if (bookshelf != null)
             {
-                message = string.Format(selectedMessage, bookshelf.Name);
+                message = string.Format(selectedMessage, bookshelf.Name, Localizer["SelectBookshelfSelected"]);
                 context.SelectedBookshelf = bookshelf;
                 context.ChangeState(CommandState.BookMenu);
 
-                keyboard = CommandKeyboards.BookMenuKeyboard;
+                keyboard = CommandKeyboards.GetBookMenu(Localizer);
             }
 
             if (keyboard == null)
@@ -44,8 +43,8 @@ namespace BookKeeperBot.Models.Commands
                 keyboard = new InlineKeyboardMarkup(
                     new[]
                     {
-                        InlineKeyboardButton.WithCallbackData("Edit", $"/change1 /select {bookshelf.Id}"),
-                        InlineKeyboardButton.WithCallbackData("Remove", $"/change1 /select")
+                        InlineKeyboardButton.WithCallbackData(Localizer["EditButton"], $"/change1 /select {bookshelf.Id}"),
+                        InlineKeyboardButton.WithCallbackData(Localizer["RemoveButton"], $"/change1 /select")
                     }
                 );
                 await BotClient.SendTextMessageAsync(context.Message.Chat, bookshelf.Name, replyMarkup: keyboard);

@@ -5,16 +5,16 @@ namespace BookKeeperBot.Models.Commands
 {
     public class RemoveBookCommand : InputBookCommand
     {
-        public RemoveBookCommand() : base("/remove")
-        {
-            EnterMessage = "Enter the title of the book";
-            ExistMessage = "The book has removed";
-            NoExitstMessage = "There is no book with that title.\nEnter the title of an existing book";
-            Message = ExistMessage;
-        }
+        public RemoveBookCommand() 
+            : base("/remove") { }
 
         public async override Task ExecuteAsync(CommandContext context)
         {
+            EnterMessage = Localizer["RemoveBookEnter"];
+            NoExitstMessage = Localizer["RemoveBookError"];
+            ExistMessage = Localizer["RemoveBookSuccess"];
+
+            Message = ExistMessage;
             IReplyMarkup keyboard = new ReplyKeyboardRemove();
             if (InputData(context, out Book book))
             {
@@ -23,7 +23,7 @@ namespace BookKeeperBot.Models.Commands
                     context.RemoveBook(book);
                     context.CommandName = null;
 
-                    keyboard = CommandKeyboards.BookMenuKeyboard;
+                    keyboard = CommandKeyboards.GetBookMenu(Localizer);
                 }
                 else
                 {

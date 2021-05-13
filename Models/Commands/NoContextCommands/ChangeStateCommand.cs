@@ -36,7 +36,7 @@ namespace BookKeeperBot.Models.Commands
             else
             {
                 context.ChangeState(commandState);
-                await BotClient.SendTextMessageAsync(context.Message.Chat, "State changed");
+                await BotClient.SendTextMessageAsync(context.Message.Chat, Localizer["ChangeState"]);
             }
         }
 

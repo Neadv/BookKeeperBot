@@ -21,7 +21,7 @@ namespace BookKeeperBot.Models.Commands
                 return;
             }
 
-            var message = "Bookshelves:";
+            var message = Localizer["ListBookshelves"];
             IReplyMarkup keyboard = null;
             List<List<InlineKeyboardButton>> buttons = new List<List<InlineKeyboardButton>>();
 
@@ -45,7 +45,7 @@ namespace BookKeeperBot.Models.Commands
         {
             if (context.Message != null)
             {
-                var message = new StringBuilder("Bookshelves:\n");
+                var message = new StringBuilder(Localizer["ListBookshelves"] + "\n");
                 foreach (var bookshelf in context.Bookshelves)
                 {
                     message.AppendLine(bookshelf.Name);

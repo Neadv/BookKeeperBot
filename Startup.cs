@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using BookKeeperBot.Models;
+using Microsoft.Extensions.Localization;
+using System.Globalization;
 
 namespace BookKeeperBot
 {
@@ -40,6 +42,8 @@ namespace BookKeeperBot
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<ICommandSelector, CommandSelector>();
             services.AddScoped<IContextFactory, ContextFactory>();
+
+            services.AddLocalization(opts => opts.ResourcesPath = "Resources");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBotService bot)
