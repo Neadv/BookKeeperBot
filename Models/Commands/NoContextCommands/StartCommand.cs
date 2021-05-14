@@ -27,7 +27,8 @@ namespace BookKeeperBot.Models.Commands
                 var user = new User
                 {
                     Id = telegramUser.Id,
-                    Username = telegramUser.Username
+                    Username = telegramUser.Username,
+                    Language = telegramUser.LanguageCode
                 };
                 context.User = user;
                 await BotClient.SendTextMessageAsync(context.Message.Chat, message, ParseMode.Html);

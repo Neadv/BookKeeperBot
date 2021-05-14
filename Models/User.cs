@@ -7,6 +7,7 @@ namespace BookKeeperBot.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
+        public string Language { get; set; }
         public List<Bookshelf> Bookshelves { get; set; }
 
         public CommandState State { get; set; }

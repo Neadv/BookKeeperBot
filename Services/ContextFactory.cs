@@ -12,13 +12,11 @@ namespace BookKeeperBot.Services
     {
         private readonly IRepository<Models.User> userRepo;
         private readonly IRepository<Bookshelf> bookshelfRepo;
-        private readonly IStringLocalizer<Command> localizer;
 
-        public ContextFactory(IRepository<Models.User> userRepository, IRepository<Bookshelf> bookshelfRepository, IStringLocalizer<Command> stringLocalizer)
+        public ContextFactory(IRepository<Models.User> userRepository, IRepository<Bookshelf> bookshelfRepository)
         {
             userRepo = userRepository;
             bookshelfRepo = bookshelfRepository;
-            localizer = stringLocalizer;
         }
 
         public async Task<CommandContext> CreateContextAsync(Update update)
@@ -89,16 +87,6 @@ namespace BookKeeperBot.Services
                 }
             }
             context.Message = message;
-
-            if (!string.IsNullOrEmpty(context.Data))
-            {
-                var substitutedCommand = CommandKeyboards.SubstitutedCommand(localizer, context.Data);
-                if (substitutedCommand != null)
-                {
-                    context.CommandName = substitutedCommand;
-                    context.Data = null;
-                }
-            }
 
             return context;
         }

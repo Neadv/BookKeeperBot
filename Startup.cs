@@ -44,6 +44,7 @@ namespace BookKeeperBot
             services.AddScoped<IContextFactory, ContextFactory>();
 
             services.AddLocalization(opts => opts.ResourcesPath = "Resources");
+            services.AddScoped<IBotLocalizer, BotLocalizer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBotService bot)
