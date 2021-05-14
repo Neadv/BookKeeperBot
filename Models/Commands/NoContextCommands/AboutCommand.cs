@@ -36,6 +36,12 @@ namespace BookKeeperBot.Models.Commands
                     Localizer["HelpEditCommands"],
                     string.Format(Localizer["HelpEditBookCommands"], "\n")
                     ),
+                CommandState.Settings => string.Format(
+                    helpMessage,
+                    Localizer["HelpSettings"],
+                    Localizer["HelpSettingsCommandList"],
+                    string.Format(Localizer["HelpSettingsCommands"], "\n")
+                ),
                 _ => null
             };
 

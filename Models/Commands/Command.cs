@@ -53,6 +53,7 @@ namespace BookKeeperBot.Models.Commands
         MainMenu,
         BookMenu,
         EditBookMenu,
-        NoContext
+        NoContext,
+        Settings
     }
 }

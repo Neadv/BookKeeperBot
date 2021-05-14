@@ -399,4 +399,25 @@
   <data name="Start" xml:space="preserve">
     <value>Hi, I am BookKeeper bot. I can keep your books and help you arrange them on the bookshelves.Also I can find the book and its descriptions by title.</value>
   </data>
+  <data name="SettingsMessage" xml:space="preserve">
+    <value>Settings:</value>
+  </data>
+  <data name="HelpSettings" xml:space="preserve">
+    <value>In this menu, you can configure the bot</value>
+  </data>
+  <data name="HelpSettingsCommandList" xml:space="preserve">
+    <value>Settings command list:</value>
+  </data>
+  <data name="HelpSettingsCommands" xml:space="preserve">
+    <value>/language - set bot language{0}/back - return to main menu</value>
+  </data>
+  <data name="LanguageEnter" xml:space="preserve">
+    <value>Select language</value>
+  </data>
+  <data name="LanguageError" xml:space="preserve">
+    <value>This language is not available</value>
+  </data>
+  <data name="LanguageSuccess" xml:space="preserve">
+    <value>Bot language has changed</value>
+  </data>
 </root>

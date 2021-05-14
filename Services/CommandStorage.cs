@@ -51,6 +51,7 @@ namespace BookKeeperBot.Services
             Register(new ListBookshelfCommand());
             Register(new SelectBookshelfCommand());
             Register(new EditBookshelfCommand());
+            Register(new SettingsCommand());
 
             // Book menu commands
             Register(new ListBookCommand());
@@ -59,12 +60,15 @@ namespace BookKeeperBot.Services
             Register(new EditBookCommand());
             Register(new AddBookCommand());
 
-            //Book edit menu commands
+            // Book edit menu commands
             Register(new EditDescriptionCommand());
             Register(new EditTitleCommand());
             Register(new EditNoteCommand());
             Register(new EditStateCommand());
             Register(new EditImageCommand());
+
+            // Settings menu commands
+            Register(new LanguageCommand());
         }
 
         public Command Find(CommandString commandString)

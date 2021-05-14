@@ -50,7 +50,7 @@ namespace BookKeeperBot.Models.Commands
             if (command == localizer["KeyboardHelp"])
                 return "/help";
             if (command == localizer["KeyboardSettings"])
-                return "/setting";
+                return "/settings";
             if (command == localizer["KeyboardSearch"])
                 return "/add_search";
             if (command == localizer["KeyboardPlanned"])
