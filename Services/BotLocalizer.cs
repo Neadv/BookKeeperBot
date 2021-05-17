@@ -25,7 +25,7 @@ namespace BookKeeperBot.Services
             {
                 languageCode = user.Language;
             }
-            else if (user == null)
+            else if (user == null && context.Message != null)
             {
                 var code = context.Message.From.LanguageCode;
                 if (availableCultures.Contains(code))
