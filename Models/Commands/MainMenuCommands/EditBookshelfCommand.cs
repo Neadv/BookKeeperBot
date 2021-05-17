@@ -10,7 +10,7 @@ namespace BookKeeperBot.Models.Commands
 
         public async override Task ExecuteAsync(CommandContext context)
         {
-            string message = Localizer["Enter a new name for the selected bookshelf:"];
+            string message = Localizer["EditBookshelfEnter"];
             IReplyMarkup keyboard = CommandKeyboards.GetMainMenu(Localizer);
             if (context.SelectedBookshelf == null || CheckParameters(context))
             {
@@ -35,7 +35,7 @@ namespace BookKeeperBot.Models.Commands
                 }
             }
             
-            if(message == Localizer["Enter a new name for the selected bookshelf:"])
+            if(message == Localizer["EditBookshelfEnter"])
                 keyboard = new ReplyKeyboardRemove();
 
             await BotClient.SendTextMessageAsync(context.Message.Chat, message, replyMarkup: keyboard);
