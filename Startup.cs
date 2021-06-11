@@ -36,7 +36,7 @@ namespace BookKeeperBot
             services.AddSingleton<ICommandStorage, CommandStorage>();
 
             services.AddDbContext<DataContext>(opts => {
-               opts.UseSqlite("Filename=Books.db");
+               opts.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -47,7 +47,7 @@ namespace BookKeeperBot
             services.AddScoped<IBotLocalizer, BotLocalizer>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBotService bot)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBotService bot, DataContext context)
         {
             if (env.IsDevelopment())
             {
@@ -61,6 +61,8 @@ namespace BookKeeperBot
             {
                 endpoints.MapControllers();
             });
+
+            context.Database.Migrate();
         }
     }
 }
