@@ -4,6 +4,10 @@ Telegram bot for saving, sorting and searching books.
 Book Keeper bot can add or search for books and arrange them into bookshelves (categories).
 Also books can be in three different states: planned, in progress, and completed.
 The bot supports two languages (English and Russian).
+
+Bot username: @BookKeeper_nvbot
+
+Link in browser: https://t.me/BookKeeper_nvbot
 ## About the project
 The Book Keeper bot is built on Asp Net Core using the Telegram.Bot library. The bot uses SQLite and EF Core to save data.
 The bot uses webhooks to get updates. Google Book Api is used to search for books.
